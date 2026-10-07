@@ -1,0 +1,210 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import { localizePath, useTranslations, type Lang } from '../i18n/ui';
+import { getProjects, neighbours, type Project } from '../lib/projects';
+
+interface Props {
+  lang: Lang;
+  project: Project;
+}
+
+const { lang, project } = Astro.props;
+const t = useTranslations(lang);
+const { data } = project.entry;
+
+const { Content } = await render(project.entry);
+
+const projects = await getProjects(lang);
+const { prev, next } = neighbours(projects, project.slug);
+
+const statusLabels: Record<string, string> = {
+  active: 'Active',
+  maintained: 'Maintained',
+  archived: 'Archived',
+  wip: 'WIP',
+};
+
+const linkIcon = (icon: string) =>
+  ({ github: 'github', demo: 'play', docs: 'docs', npm: 'npm' })[icon] ?? 'external';
+
+const sortedLinks = [...data.links].sort((a, b) => Number(b.primary) - Number(a.primary));
+const dateFmt = new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'long' });
+---
+
+<BaseLayout
+  lang={lang}
+  path={`/projects/${project.slug}/`}
+  title={data.title}
+  description={data.tagline}
+  ogImage={data.cover?.src}
+  ogType="article"
+  wide
+>
+  <nav class="crumbs" aria-label={t.projects.heading}>
+    <a href={localizePath('/', lang)}>{t.nav.home}</a>
+    <span aria-hidden="true">/</span>
+    <a href={localizePath('/projects/', lang)}>{t.projects.heading}</a>
+    <span aria-hidden="true">/</span>
+    <span>{data.title}</span>
+  </nav>
+
+  {
+    project.isFallback && (
+      <p class="notice">
+        <Icon name="languages" />
+        <span>This case study is not translated yet — showing the English version.</span>
+      </p>
+    )
+  }
+
+  <!-- ===== Шапка проекта ===== -->
+  <header class="project-head">
+    {data.kicker && <p class="project-head__kicker">{data.kicker}</p>}
+    <h1 class="project-head__title">{data.title}</h1>
+    {data.tagline && <p class="project-head__tagline">{data.tagline}</p>}
+
+    <ul class="badges">
+      <li class:list={['badge', { 'badge--ok': data.status === 'active' }]}>
+        <span class="badge__dot"></span>
+        {statusLabels[data.status]}
+      </li>
+      {data.license && (
+        <li class="badge">
+          <Icon name="scale" />
+          {data.license}
+        </li>
+      )}
+      {data.period && (
+        <li class="badge">
+          <Icon name="calendar" />
+          {data.period}
+        </li>
+      )}
+      {data.updated && (
+        <li class="badge">
+          {t.project.updated} {dateFmt.format(data.updated)}
+        </li>
+      )}
+    </ul>
+
+    {
+      sortedLinks.length > 0 && (
+        <div class="project-head__actions">
+          {sortedLinks.map((link) => (
+            <a
+              class:list={['btn', link.primary ? 'btn--primary' : 'btn--ghost']}
+              href={link.href}
+              target="_blank"
+              rel="noopener"
+            >
+              <Icon name={linkIcon(link.icon)} />
+              <span>{link.label}</span>
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </header>
+
+  <!-- ===== Демо: скриншоты, видео, живой iframe ===== -->
+  {
+    data.media.length > 0 && (
+      <section class="section" id="demo">
+        <h2 class="section__title">{t.project.demo}</h2>
+        <div class="media">
+          {data.media.map((item) => (
+            <figure>
+              <div class="media__frame" style={`aspect-ratio:${item.ratio}`}>
+                {item.type === 'video' && (
+                  <video src={item.src} controls muted loop playsinline preload="metadata" />
+                )}
+                {item.type === 'iframe' && (
+                  <iframe src={item.src} title={item.alt || data.title} loading="lazy" allowfullscreen />
+                )}
+                {item.type === 'image' && <img src={item.src} alt={item.alt} loading="lazy" decoding="async" />}
+              </div>
+              {item.caption && <figcaption>{item.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ===== Метрики ===== -->
+  {
+    data.stats.length > 0 && (
+      <section class="section" id="results">
+        <h2 class="section__title">{t.project.results}</h2>
+        <ul class="stats">
+          {data.stats.map((stat) => (
+            <li>
+              <p class="stats__value">{stat.value}</p>
+              <p class="stats__label">{stat.label}</p>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <!-- ===== Моя роль ===== -->
+  {
+    data.role && (
+      <section class="section" id="role">
+        <h2 class="section__title">{t.project.role}</h2>
+        <p class="prose">{data.role}</p>
+      </section>
+    )
+  }
+
+  <!-- ===== Стек ===== -->
+  {
+    data.stack.length > 0 && (
+      <section class="section" id="stack">
+        <h2 class="section__title">{t.project.stack}</h2>
+        <div class="skills">
+          {data.stack.map((group) => (
+            <div>
+              {group.name && <h3 class="skills__group-name">{group.name}</h3>}
+              <ul class="chips">
+                {group.items.map((item) => (
+                  <li class="chip">{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+  <!-- ===== Свободная часть: Markdown-тело файла ===== -->
+  <div class="markdown">
+    <Content />
+  </div>
+
+  <!-- ===== Предыдущий / следующий ===== -->
+  {
+    (prev || next) && (
+      <nav class="pager" aria-label={t.projects.heading}>
+        {prev ? (
+          <a class="pager__link" href={localizePath(`/projects/${prev.slug}/`, lang)}>
+            <span class="pager__dir">← {t.project.prev}</span>
+            <span class="pager__name">{prev.entry.data.title}</span>
+          </a>
+        ) : (
+          <span />
+        )}
+        {next && (
+          <a class="pager__link" href={localizePath(`/projects/${next.slug}/`, lang)}>
+            <span class="pager__dir">{t.project.next} →</span>
+            <span class="pager__name">{next.entry.data.title}</span>
+          </a>
+        )}
+      </nav>
+    )
+  }
+</BaseLayout>

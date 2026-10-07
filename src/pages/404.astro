@@ -1,0 +1,22 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { defaultLang, localizePath, useTranslations } from '../i18n/ui';
+
+// Статический 404 отдаётся хостингом, язык посетителя здесь ещё неизвестен —
+// показываем английский и даём ссылки на все версии.
+const lang = defaultLang;
+const t = useTranslations(lang);
+---
+
+<BaseLayout lang={lang} path="/404/" title="Page not found" noindex>
+  <section class="section section--first" style="padding-top:40px">
+    <h1 class="hero__title">404</h1>
+    <p class="section__lead" style="margin-top:14px">
+      This page does not exist. Maybe it moved, or the link is old.
+    </p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href={localizePath('/', lang)}>{t.nav.home}</a>
+      <a class="btn btn--ghost" href={localizePath('/projects/', lang)}>{t.projects.heading}</a>
+    </div>
+  </section>
+</BaseLayout>

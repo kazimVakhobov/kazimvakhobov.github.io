@@ -1,0 +1,65 @@
+---
+import type { Dict } from '../../i18n/ui';
+
+interface Props {
+  t: Dict;
+}
+
+const { t } = Astro.props;
+// Шаблонный элемент словаря (пустая должность) не рендерим.
+const items = t.experience.items.filter((item) => item.role.trim() !== '');
+---
+
+<section class="section" id="experience">
+  <h2 class="section__title">{t.experience.heading}</h2>
+
+  <ol class="timeline">
+    {
+      items.map((item) => (
+        <li class="timeline__item">
+          <h3 class="timeline__role">{item.role}</h3>
+
+          <p class="timeline__meta">
+            {item.company && (
+              <span class="timeline__company">
+                {item.companyHref ? (
+                  <a href={item.companyHref} target="_blank" rel="noopener">
+                    {item.company}
+                  </a>
+                ) : (
+                  item.company
+                )}
+              </span>
+            )}
+            {item.period && <span>{item.period}</span>}
+            {item.location && <span>{item.location}</span>}
+          </p>
+
+          <div class="timeline__body">
+            {item.summary && <p class="prose">{item.summary}</p>}
+
+            {item.bullets.filter((b) => b.trim() !== '').length > 0 && (
+              <ul class="bullets" style="margin-top:12px">
+                {item.bullets
+                  .filter((b) => b.trim() !== '')
+                  .map((bullet) => (
+                    <li>{bullet}</li>
+                  ))}
+              </ul>
+            )}
+
+            {item.stack.filter((s) => s.trim() !== '').length > 0 && (
+              <ul class="chips" style="margin-top:14px">
+                {item.stack
+                  .filter((s) => s.trim() !== '')
+                  .map((tech) => (
+                    <li class="chip">{tech}</li>
+                  ))}
+              </ul>
+            )}
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</section>

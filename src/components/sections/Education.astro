@@ -1,0 +1,30 @@
+---
+import type { Dict } from '../../i18n/ui';
+
+interface Props {
+  t: Dict;
+}
+
+const { t } = Astro.props;
+const items = t.education.items.filter((item) => item.degree.trim() !== '' || item.school.trim() !== '');
+---
+
+<section class="section" id="education">
+  <h2 class="section__title">{t.education.heading}</h2>
+
+  <ol class="timeline">
+    {
+      items.map((item) => (
+        <li class="timeline__item">
+          <h3 class="timeline__role">{item.degree}</h3>
+          <p class="timeline__meta">
+            {item.school && <span class="timeline__company">{item.school}</span>}
+            {item.period && <span>{item.period}</span>}
+            {item.location && <span>{item.location}</span>}
+          </p>
+          {item.note && <p class="prose timeline__body">{item.note}</p>}
+        </li>
+      ))
+    }
+  </ol>
+</section>

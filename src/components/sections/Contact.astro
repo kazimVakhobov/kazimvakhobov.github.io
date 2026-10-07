@@ -1,0 +1,44 @@
+---
+import Icon from '../Icon.astro';
+import type { Dict } from '../../i18n/ui';
+
+interface Props {
+  t: Dict;
+}
+
+const { t } = Astro.props;
+const email = t.contact.email.trim();
+const links = t.contact.links.filter((l) => l.href.trim() !== '');
+---
+
+<section class="section" id="contact">
+  <h2 class="section__title">{t.contact.heading}</h2>
+  {t.contact.text && <p class="section__lead">{t.contact.text}</p>}
+
+  {
+    email && (
+      <div class="mailbox">
+        <Icon name="mail" />
+        <a href={`mailto:${email}`}>{email}</a>
+        <button type="button" data-copy={email} data-copied-label={t.contact.copied}>
+          {t.contact.copy}
+        </button>
+      </div>
+    )
+  }
+
+  {
+    links.length > 0 && (
+      <ul class="chips" style="margin-top:16px">
+        {links.map((link) => (
+          <li>
+            <a class="chip chip--button" href={link.href} target="_blank" rel="noopener">
+              <Icon name={link.icon} />
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</section>

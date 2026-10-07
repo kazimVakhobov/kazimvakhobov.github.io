@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/sections/Hero.astro';
+import About from '../components/sections/About.astro';
+import Experience from '../components/sections/Experience.astro';
+import Projects from '../components/sections/Projects.astro';
+import Education from '../components/sections/Education.astro';
+import Skills from '../components/sections/Skills.astro';
+import Contact from '../components/sections/Contact.astro';
+import { useTranslations, type Lang } from '../i18n/ui';
+import { getProjects } from '../lib/projects';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+const projects = await getProjects(lang);
+---
+
+<BaseLayout lang={lang} path="/" title={t.meta.title} description={t.meta.description} isHome>
+  <Hero t={t} />
+  <About t={t} />
+  <Experience t={t} />
+  <Projects t={t} lang={lang} projects={projects} />
+  <Education t={t} />
+  <Skills t={t} />
+  <Contact t={t} />
+</BaseLayout>

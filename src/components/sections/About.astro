@@ -1,0 +1,18 @@
+---
+import type { Dict } from '../../i18n/ui';
+
+interface Props {
+  t: Dict;
+}
+
+const { t } = Astro.props;
+const paragraphs = t.about.paragraphs.filter((p) => p.trim() !== '');
+---
+
+<section class="section" id="about">
+  <h2 class="section__title">{t.about.heading}</h2>
+
+  <div class="prose">
+    {paragraphs.map((text) => <p>{text}</p>)}
+  </div>
+</section>
