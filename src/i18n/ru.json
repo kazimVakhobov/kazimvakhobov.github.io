@@ -1,0 +1,120 @@
+{
+  "_readme": "Русский. Интерфейсные подписи переведены, содержимое резюме пустое — заполняется позже. Пустые значения подменяются английскими из en.json.",
+
+  "meta": {
+    "title": "",
+    "titleTemplate": "%s — Казим Вахобов",
+    "description": "",
+    "ogAlt": ""
+  },
+
+  "nav": {
+    "home": "Главная",
+    "about": "Обо мне",
+    "experience": "Опыт",
+    "projects": "Проекты",
+    "education": "Образование",
+    "skills": "Навыки",
+    "contact": "Контакты"
+  },
+
+  "sidebar": {
+    "name": "",
+    "role": "",
+    "bio": "",
+    "avatarAlt": "",
+    "facts": [],
+    "socials": [],
+    "cv": "Скачать резюме",
+    "cvHref": ""
+  },
+
+  "hero": {
+    "badge": "",
+    "title": "",
+    "text": "",
+    "cta": "Связаться",
+    "ctaSecondary": "Посмотреть опыт"
+  },
+
+  "about": {
+    "heading": "Обо мне",
+    "paragraphs": []
+  },
+
+  "experience": {
+    "heading": "Опыт работы",
+    "present": "по настоящее время",
+    "items": []
+  },
+
+  "projects": {
+    "heading": "Проекты",
+    "metaTitle": "Проекты",
+    "metaDescription": "",
+    "lead": "",
+    "all": "Все проекты",
+    "featured": "Избранное",
+    "openSource": "Open source",
+    "filterAll": "Все",
+    "empty": "Пока ничего нет.",
+    "readMore": "Подробнее"
+  },
+
+  "project": {
+    "demo": "Демо",
+    "overview": "О проекте",
+    "problem": "Задача",
+    "solution": "Решение",
+    "features": "Ключевые возможности",
+    "architecture": "Архитектура",
+    "stack": "Стек",
+    "quickstart": "Быстрый старт",
+    "results": "Результаты",
+    "role": "Моя роль",
+    "lessons": "Чему научился",
+    "source": "Исходный код",
+    "liveDemo": "Живое демо",
+    "docs": "Документация",
+    "package": "Пакет",
+    "copyCode": "Копировать",
+    "copied": "Скопировано",
+    "prev": "Предыдущий проект",
+    "next": "Следующий проект",
+    "backToProjects": "Все проекты",
+    "updated": "Обновлено"
+  },
+
+  "education": {
+    "heading": "Образование",
+    "items": []
+  },
+
+  "skills": {
+    "heading": "Навыки",
+    "groups": []
+  },
+
+  "contact": {
+    "heading": "",
+    "text": "",
+    "email": "",
+    "copy": "Копировать",
+    "copied": "Скопировано",
+    "links": []
+  },
+
+  "footer": {
+    "rights": "",
+    "note": ""
+  },
+
+  "ui": {
+    "theme": "Переключить тему",
+    "menu": "Меню",
+    "closeMenu": "Закрыть меню",
+    "lang": "Язык",
+    "skipToContent": "Перейти к содержимому",
+    "backToTop": "Наверх"
+  }
+}

@@ -1,0 +1,150 @@
+{
+  "_readme": "Эталонный словарь. Структура массивов задана одним пустым элементом-шаблоном — скопируй его и заполняй. Элементы с пустым главным полем (title/role/name/degree) не рендерятся. Пустые значения в ru.json / uz.json автоматически подменяются на английские.",
+
+  "meta": {
+    "title": "",
+    "titleTemplate": "%s — Kazim Vakhobov",
+    "description": "",
+    "ogAlt": ""
+  },
+
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "education": "Education",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+
+  "sidebar": {
+    "name": "",
+    "role": "",
+    "bio": "",
+    "avatarAlt": "",
+    "facts": [
+      { "icon": "pin", "label": "", "href": "" }
+    ],
+    "socials": [
+      { "icon": "github", "label": "", "href": "" }
+    ],
+    "cv": "Download CV",
+    "cvHref": ""
+  },
+
+  "hero": {
+    "badge": "",
+    "title": "",
+    "text": "",
+    "cta": "Get in touch",
+    "ctaSecondary": "See experience"
+  },
+
+  "about": {
+    "heading": "About",
+    "paragraphs": [""]
+  },
+
+  "experience": {
+    "heading": "Experience",
+    "present": "Present",
+    "items": [
+      {
+        "role": "",
+        "company": "",
+        "companyHref": "",
+        "period": "",
+        "location": "",
+        "summary": "",
+        "bullets": [""],
+        "stack": [""]
+      }
+    ]
+  },
+
+  "projects": {
+    "heading": "Projects",
+    "metaTitle": "Projects",
+    "metaDescription": "",
+    "lead": "",
+    "all": "All projects",
+    "featured": "Featured",
+    "openSource": "Open source",
+    "filterAll": "All",
+    "empty": "Nothing here yet.",
+    "readMore": "Case study"
+  },
+
+  "project": {
+    "demo": "Demo",
+    "overview": "Overview",
+    "problem": "Problem",
+    "solution": "Solution",
+    "features": "Key features",
+    "architecture": "Architecture",
+    "stack": "Tech stack",
+    "quickstart": "Quick start",
+    "results": "Results",
+    "role": "My role",
+    "lessons": "What I learned",
+    "source": "Source code",
+    "liveDemo": "Live demo",
+    "docs": "Docs",
+    "package": "Package",
+    "copyCode": "Copy",
+    "copied": "Copied",
+    "prev": "Previous project",
+    "next": "Next project",
+    "backToProjects": "All projects",
+    "updated": "Updated"
+  },
+
+  "education": {
+    "heading": "Education",
+    "items": [
+      {
+        "degree": "",
+        "school": "",
+        "period": "",
+        "location": "",
+        "note": ""
+      }
+    ]
+  },
+
+  "skills": {
+    "heading": "Skills",
+    "groups": [
+      {
+        "name": "",
+        "items": [""]
+      }
+    ]
+  },
+
+  "contact": {
+    "heading": "",
+    "text": "",
+    "email": "",
+    "copy": "Copy",
+    "copied": "Copied",
+    "links": [
+      { "icon": "telegram", "label": "", "href": "" }
+    ]
+  },
+
+  "footer": {
+    "rights": "",
+    "note": ""
+  },
+
+  "ui": {
+    "theme": "Toggle theme",
+    "menu": "Menu",
+    "closeMenu": "Close menu",
+    "lang": "Language",
+    "skipToContent": "Skip to content",
+    "backToTop": "Back to top"
+  }
+}

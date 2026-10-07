@@ -1,0 +1,120 @@
+{
+  "_readme": "O'zbekcha (lotin). Интерфейс переведён, содержимое резюме пустое. Пустые значения подменяются английскими из en.json.",
+
+  "meta": {
+    "title": "",
+    "titleTemplate": "%s — Kazim Vakhobov",
+    "description": "",
+    "ogAlt": ""
+  },
+
+  "nav": {
+    "home": "Asosiy",
+    "about": "Men haqimda",
+    "experience": "Tajriba",
+    "projects": "Loyihalar",
+    "education": "Ta'lim",
+    "skills": "Ko'nikmalar",
+    "contact": "Aloqa"
+  },
+
+  "sidebar": {
+    "name": "",
+    "role": "",
+    "bio": "",
+    "avatarAlt": "",
+    "facts": [],
+    "socials": [],
+    "cv": "Rezyumeni yuklab olish",
+    "cvHref": ""
+  },
+
+  "hero": {
+    "badge": "",
+    "title": "",
+    "text": "",
+    "cta": "Bog'lanish",
+    "ctaSecondary": "Tajribani ko'rish"
+  },
+
+  "about": {
+    "heading": "Men haqimda",
+    "paragraphs": []
+  },
+
+  "experience": {
+    "heading": "Ish tajribasi",
+    "present": "hozirgi vaqtgacha",
+    "items": []
+  },
+
+  "projects": {
+    "heading": "Loyihalar",
+    "metaTitle": "Loyihalar",
+    "metaDescription": "",
+    "lead": "",
+    "all": "Barcha loyihalar",
+    "featured": "Tanlangan",
+    "openSource": "Open source",
+    "filterAll": "Barchasi",
+    "empty": "Hozircha hech narsa yo'q.",
+    "readMore": "Batafsil"
+  },
+
+  "project": {
+    "demo": "Demo",
+    "overview": "Loyiha haqida",
+    "problem": "Muammo",
+    "solution": "Yechim",
+    "features": "Asosiy imkoniyatlar",
+    "architecture": "Arxitektura",
+    "stack": "Texnologiyalar",
+    "quickstart": "Tez boshlash",
+    "results": "Natijalar",
+    "role": "Mening rolim",
+    "lessons": "Nimani o'rgandim",
+    "source": "Manba kodi",
+    "liveDemo": "Jonli demo",
+    "docs": "Hujjatlar",
+    "package": "Paket",
+    "copyCode": "Nusxalash",
+    "copied": "Nusxalandi",
+    "prev": "Oldingi loyiha",
+    "next": "Keyingi loyiha",
+    "backToProjects": "Barcha loyihalar",
+    "updated": "Yangilangan"
+  },
+
+  "education": {
+    "heading": "Ta'lim",
+    "items": []
+  },
+
+  "skills": {
+    "heading": "Ko'nikmalar",
+    "groups": []
+  },
+
+  "contact": {
+    "heading": "",
+    "text": "",
+    "email": "",
+    "copy": "Nusxalash",
+    "copied": "Nusxalandi",
+    "links": []
+  },
+
+  "footer": {
+    "rights": "",
+    "note": ""
+  },
+
+  "ui": {
+    "theme": "Mavzuni almashtirish",
+    "menu": "Menyu",
+    "closeMenu": "Menyuni yopish",
+    "lang": "Til",
+    "skipToContent": "Kontentga o'tish",
+    "backToTop": "Yuqoriga"
+  }
+}
