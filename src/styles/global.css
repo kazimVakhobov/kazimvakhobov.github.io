@@ -448,15 +448,21 @@ code, pre, kbd { font-family: var(--mono); }
 .badge {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 3px 9px;
+  gap: 6px;
+  padding: 3px 10px;
   border: 1px solid var(--line);
   border-radius: 999px;
   font-size: 12px;
   color: var(--muted);
+  white-space: nowrap;
 }
+.badge svg { width: 13px; height: 13px; flex: none; }
 .badge--ok { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, var(--line)); }
-.badge__dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.badge__dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; }
+
+.notice svg { width: 16px; height: 16px; flex: none; color: var(--faint); }
+.features svg,
+.timeline svg { width: 15px; height: 15px; flex: none; }
 
 .media { display: grid; gap: 18px; }
 .media figure { margin: 0; }
