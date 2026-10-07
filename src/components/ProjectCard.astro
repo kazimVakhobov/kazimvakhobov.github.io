@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import { localizePath, type Dict, type Lang } from '../i18n/ui';
+import type { Project } from '../lib/projects';
+
+interface Props {
+  project: Project;
+  lang: Lang;
+  t: Dict;
+}
+
+const { project, lang, t } = Astro.props;
+const { data } = project.entry;
+const href = localizePath(`/projects/${project.slug}/`, lang);
+---
+
+<li class="card" data-tags={data.tags.join('|')}>
+  <a href={href} aria-labelledby={`card-${project.slug}`}>
+    {
+      data.cover && (
+        <div class="card__cover">
+          <Image src={data.cover} alt={data.coverAlt} widths={[320, 640]} />
+        </div>
+      )
+    }
+
+    <div class="card__body">
+      {data.kicker && <p class="card__kicker">{data.kicker}</p>}
+      <h3 class="card__title" id={`card-${project.slug}`}>{data.title}</h3>
+      {data.tagline && <p class="card__text">{data.tagline}</p>}
+
+      <div class="card__foot">
+        {data.tags.slice(0, 3).map((tag) => <span class="chip">{tag}</span>)}
+        <span class="link-more">{t.projects.readMore} →</span>
+      </div>
+    </div>
+  </a>
+</li>
+
+<style>
+  .card > a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .card__foot .link-more {
+    margin-left: auto;
+  }
+</style>

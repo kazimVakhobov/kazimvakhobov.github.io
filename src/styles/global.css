@@ -389,6 +389,7 @@ code, pre, kbd { font-family: var(--mono); }
   font-size: 12.5px;
   white-space: nowrap;
 }
+.chip svg { width: 13px; height: 13px; flex: none; }
 .chip--button { transition: background 0.15s, color 0.15s; }
 .chip--button:hover { color: var(--fg); }
 .chip--button[aria-pressed="true"] { background: var(--fg); color: var(--inv-fg); }
