@@ -1,0 +1,187 @@
+---
+import Sidebar from '../components/Sidebar.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { langs, localizePath, useTranslations, defaultLang, type Lang } from '../i18n/ui';
+import '../styles/global.css';
+
+interface Props {
+  lang: Lang;
+  /** Путь БЕЗ языкового префикса: "/", "/projects/", "/projects/my-cli/" */
+  path: string;
+  title: string;
+  description?: string;
+  /** Абсолютный или относительный URL картинки для соцсетей */
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  isHome?: boolean;
+  /** Широкая колонка — для страниц проектов */
+  wide?: boolean;
+  noindex?: boolean;
+}
+
+const {
+  lang,
+  path,
+  title,
+  description = '',
+  ogImage,
+  ogType = 'website',
+  isHome = false,
+  wide = false,
+  noindex = false,
+} = Astro.props;
+
+const t = useTranslations(lang);
+
+const canonical = new URL(localizePath(path, lang), Astro.site);
+const ogImageUrl = ogImage ? new URL(ogImage, Astro.site) : undefined;
+
+// Полный заголовок: на главной — как есть, на внутренних — по шаблону из словаря.
+const fullTitle = isHome ? title : t.meta.titleTemplate.replace('%s', title);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{fullTitle}</title>
+    {description && <meta name="description" content={description} />}
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    {/* Языковые альтернативы — чтобы поиск знал про /ru/ и /uz/ версии этой же страницы */}
+    {
+      langs.map((code) => (
+        <link rel="alternate" hreflang={code} href={new URL(localizePath(path, code), Astro.site)} />
+      ))
+    }
+    <link rel="alternate" hreflang="x-default" href={new URL(localizePath(path, defaultLang), Astro.site)} />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={fullTitle} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={lang} />
+    {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
+    {ogImageUrl && t.meta.ogAlt && <meta property="og:image:alt" content={t.meta.ogAlt} />}
+    <meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+
+    {/* Тема выставляется до первой отрисовки, иначе при тёмной теме мигает светлым */}
+    <script is:inline>
+      try {
+        const saved = localStorage.getItem('theme');
+        if (saved === 'light' || saved === 'dark') {
+          document.documentElement.dataset.theme = saved;
+        }
+      } catch {
+        /* приватный режим — остаёмся на prefers-color-scheme */
+      }
+    </script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#content">{t.ui.skipToContent}</a>
+
+    <Sidebar lang={lang} t={t} />
+    <button class="sidebar-backdrop" id="sidebar-backdrop" type="button" aria-label={t.ui.closeMenu} hidden></button>
+
+    <div class="shell">
+      <Header lang={lang} t={t} path={path} isHome={isHome} />
+
+      <main class:list={['main', { 'main--wide': wide }]} id="content">
+        <slot />
+        <Footer t={t} />
+      </main>
+    </div>
+
+    <script>
+      // --- Тема -------------------------------------------------------------
+      const root = document.documentElement;
+      const themeBtn = document.getElementById('theme-btn');
+
+      themeBtn?.addEventListener('click', () => {
+        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const current = root.dataset.theme ?? (systemDark ? 'dark' : 'light');
+        const next = current === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch {
+          /* не критично */
+        }
+      });
+
+      // --- Мобильное меню ---------------------------------------------------
+      const sidebar = document.getElementById('sidebar');
+      const menuBtn = document.getElementById('menu-btn');
+      const backdrop = document.getElementById('sidebar-backdrop');
+
+      function setMenu(open: boolean) {
+        sidebar?.classList.toggle('is-open', open);
+        menuBtn?.setAttribute('aria-expanded', String(open));
+        if (backdrop) backdrop.hidden = !open;
+      }
+
+      menuBtn?.addEventListener('click', () => setMenu(!sidebar?.classList.contains('is-open')));
+      backdrop?.addEventListener('click', () => setMenu(false));
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') setMenu(false);
+      });
+      sidebar?.addEventListener('click', (e) => {
+        if ((e.target as HTMLElement).closest('a')) setMenu(false);
+      });
+
+      // --- Тень под шапкой при скролле --------------------------------------
+      const header = document.querySelector('.header');
+      const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 8);
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // --- Подсветка активного раздела --------------------------------------
+      const navLinks = [...document.querySelectorAll<HTMLAnchorElement>('.nav a[data-section]')];
+      const anchored = navLinks.filter((a) => a.getAttribute('href')?.startsWith('#'));
+
+      if (anchored.length > 0) {
+        const sections = anchored
+          .map((a) => document.getElementById(a.getAttribute('href')!.slice(1)))
+          .filter((el): el is HTMLElement => el !== null);
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            const visible = entries
+              .filter((e) => e.isIntersecting)
+              .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+            if (!visible) return;
+            navLinks.forEach((a) => a.classList.toggle('is-active', a.dataset.section === visible.target.id));
+          },
+          { rootMargin: '-25% 0px -60% 0px', threshold: [0, 0.2, 0.6] }
+        );
+
+        sections.forEach((section) => observer.observe(section));
+      }
+
+      // --- Кнопки «скопировать» ---------------------------------------------
+      document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const value = btn.dataset.copy ?? '';
+          const done = btn.dataset.copiedLabel ?? 'OK';
+          const idle = btn.textContent ?? '';
+          try {
+            await navigator.clipboard.writeText(value);
+            btn.textContent = done;
+            setTimeout(() => (btn.textContent = idle), 1600);
+          } catch {
+            /* нет доступа к буферу — оставляем как есть */
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

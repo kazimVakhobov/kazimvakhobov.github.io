@@ -1,0 +1,68 @@
+---
+import Icon from './Icon.astro';
+import { localizePath, type Lang } from '../i18n/ui';
+import type { Dict } from '../i18n/ui';
+
+interface Props {
+  lang: Lang;
+  t: Dict;
+}
+
+const { lang, t } = Astro.props;
+const home = localizePath('/', lang);
+
+// Шаблонные элементы с пустым текстом не показываем — заполнятся из словаря позже.
+const facts = t.sidebar.facts.filter((f) => f.label.trim() !== '');
+const socials = t.sidebar.socials.filter((s) => s.href.trim() !== '');
+const hasCv = t.sidebar.cvHref.trim() !== '';
+---
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar__top">
+    <a class="avatar" href={home} aria-label={t.nav.home}>
+      {/* TODO: положить фото в src/assets/avatar.jpg и подключить через <Image> */}
+    </a>
+
+    <p class="sidebar__name">{t.sidebar.name}</p>
+    <p class="sidebar__role">{t.sidebar.role}</p>
+    {t.sidebar.bio && <p class="sidebar__bio">{t.sidebar.bio}</p>}
+
+    {
+      facts.length > 0 && (
+        <ul class="facts">
+          {facts.map((fact) => (
+            <li>
+              <Icon name={fact.icon} />
+              {fact.href ? <a href={fact.href}>{fact.label}</a> : <span>{fact.label}</span>}
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+
+  <div class="sidebar__bottom">
+    {
+      socials.length > 0 && (
+        <ul class="socials">
+          {socials.map((social) => (
+            <li>
+              <a href={social.href} rel="me noopener" target="_blank" aria-label={social.label}>
+                <Icon name={social.icon} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+
+    {
+      hasCv && (
+        <a class="btn btn--primary" href={t.sidebar.cvHref} download>
+          <Icon name="download" />
+          <span>{t.sidebar.cv}</span>
+        </a>
+      )
+    }
+  </div>
+</aside>
