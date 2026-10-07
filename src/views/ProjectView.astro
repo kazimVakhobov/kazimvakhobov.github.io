@@ -54,7 +54,7 @@ const dateFmt = new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'long' }
     project.isFallback && (
       <p class="notice">
         <Icon name="languages" />
-        <span>This case study is not translated yet — showing the English version.</span>
+        <span>{t.project.notTranslated}</span>
       </p>
     )
   }
