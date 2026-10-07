@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
+import avatar from '../assets/avatar.jpeg';
 import { localizePath, type Lang } from '../i18n/ui';
 import type { Dict } from '../i18n/ui';
 
@@ -20,7 +22,7 @@ const hasCv = t.sidebar.cvHref.trim() !== '';
 <aside class="sidebar" id="sidebar">
   <div class="sidebar__top">
     <a class="avatar" href={home} aria-label={t.nav.home}>
-      {/* TODO: положить фото в src/assets/avatar.jpg и подключить через <Image> */}
+      <Image src={avatar} alt={t.sidebar.avatarAlt} widths={[96, 192]} sizes="96px" loading="eager" />
     </a>
 
     <p class="sidebar__name">{t.sidebar.name}</p>

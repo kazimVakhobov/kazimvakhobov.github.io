@@ -154,13 +154,21 @@ code, pre, kbd { font-family: var(--mono); }
 
 .avatar {
   display: block;
-  width: 76px; height: 76px;
+  width: 96px; height: 96px;
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--chip);
   border: 1px solid var(--line);
 }
-.avatar img { width: 100%; height: 100%; object-fit: cover; }
+/* Исходник — портрет в полный рост, в 96px лицо было бы неразличимо.
+   Масштабируем от точки на уровне лица, чтобы кадрировать его без правки файла. */
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(2.1);
+  transform-origin: 52% 26%;
+}
 
 .facts {
   display: grid;
