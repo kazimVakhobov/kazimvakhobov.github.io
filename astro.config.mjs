@@ -25,6 +25,17 @@ export default defineConfig({
     }),
   ],
 
+  markdown: {
+    // Две темы для код-блоков: Shiki отдаёт тёмную через --shiki-dark-*,
+    // переключение живёт в global.css рядом с остальными темами.
+    shikiConfig: {
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
+    },
+  },
+
   build: {
     // /projects/foo/index.html — путь с завершающим слэшем, удобно для статик-хостинга
     format: 'directory',

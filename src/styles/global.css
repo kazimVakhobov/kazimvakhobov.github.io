@@ -170,9 +170,10 @@ code, pre, kbd { font-family: var(--mono); }
   border-top: 1px solid var(--line);
   font-size: 13.5px;
 }
-.facts li { display: flex; gap: 10px; align-items: center; min-width: 0; }
-.facts svg { width: 15px; height: 15px; color: var(--faint); flex: none; }
-.facts span, .facts a { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.facts li { display: flex; gap: 10px; align-items: flex-start; min-width: 0; }
+.facts svg { width: 15px; height: 15px; margin-top: 4px; color: var(--faint); flex: none; }
+/* Длинные подписи переносим, а не режем многоточием: в сайдбаре всего ~244px */
+.facts span, .facts a { min-width: 0; overflow-wrap: anywhere; }
 .facts a:hover { color: var(--accent); }
 
 .socials { display: flex; gap: 18px; color: var(--muted); }
@@ -295,9 +296,10 @@ code, pre, kbd { font-family: var(--mono); }
 .link-more { font-size: 13.5px; color: var(--accent); white-space: nowrap; }
 .link-more:hover { text-decoration: underline; text-underline-offset: 3px; }
 
+/* Отступы задаём на одном уровне специфичности, иначе обнуление margin перебивает их */
 .prose { color: var(--muted); }
+.prose > * { margin: 0; }
 .prose > * + * { margin-top: 14px; }
-.prose p { margin: 0; }
 .prose strong { color: var(--fg); font-weight: 600; }
 .prose a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 
@@ -533,6 +535,7 @@ code, pre, kbd { font-family: var(--mono); }
 
 /* Markdown-тело проекта */
 .markdown { color: var(--muted); }
+.markdown > * { margin: 0; }
 .markdown > * + * { margin-top: 16px; }
 .markdown h2 {
   font-size: 23px;
@@ -542,7 +545,7 @@ code, pre, kbd { font-family: var(--mono); }
   border-top: 1px solid var(--line);
 }
 .markdown h3 { font-size: 18px; color: var(--fg); margin-top: 28px; }
-.markdown p, .markdown li { margin: 0; }
+.markdown li { margin: 0; }
 .markdown strong { color: var(--fg); }
 .markdown a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
 .markdown ul, .markdown ol { display: grid; gap: 8px; padding-left: 20px; }
@@ -573,6 +576,28 @@ code, pre, kbd { font-family: var(--mono); }
   overflow-x: auto;
   font-size: 13.5px;
   line-height: 1.55;
+}
+
+/* Код-блоки: Shiki кладёт светлую тему в сами свойства, тёмную — в --shiki-dark-*.
+   Ручной переключатель темы должен побеждать системную настройку, поэтому
+   data-theme="light" явно возвращает светлый вариант. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .astro-code,
+  :root:not([data-theme="light"]) .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+}
+:root[data-theme="dark"] .astro-code,
+:root[data-theme="dark"] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
 }
 
 /* ============================ CONTACT / FOOTER ============================ */
