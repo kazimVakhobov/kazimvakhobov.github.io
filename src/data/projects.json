@@ -19,5 +19,25 @@
     "links": [
       { "label": "Source code", "href": "https://github.com/kazimVakhobov/har-kun-ai", "icon": "github" }
     ]
+  },
+  {
+    "id": "yuk-markaz-24",
+    "kicker": "Logistics platform",
+    "title": "Yuk Markaz 24",
+    "description": "A freight marketplace that puts cargo owners, logistics companies and drivers in one place — filtered search by route, cargo type, date and price, with ratings and direct contact instead of intermediaries. Four applications to production in four months: an administrative panel, a dispatcher workspace, a driver mobile application and the landing page.",
+    "tags": ["Angular 17", "ReactJS", "React Native", "NestJS"],
+    "links": [
+      { "label": "yukmarkaz24.uz", "href": "https://yukmarkaz24.uz/", "icon": "external" }
+    ]
+  },
+  {
+    "id": "qmed",
+    "kicker": "Clinic platform",
+    "title": "QMed",
+    "description": "An operating system for private clinics in Uzbekistan. Three products over one shared database: a reception web panel with the appointment grid, patient cards and owner analytics; a doctor's mobile application for the schedule and in-visit notes; and a public site for the clinic itself. Built for practices with two to ten consulting rooms.",
+    "tags": [],
+    "links": [
+      { "label": "qmed.uz", "href": "https://qmed.uz/", "icon": "external" }
+    ]
   }
 ]
