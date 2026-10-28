@@ -25,19 +25,19 @@
     "kicker": "Logistics platform",
     "title": "Yuk Markaz 24",
     "description": "A freight marketplace that puts cargo owners, logistics companies and drivers in one place — filtered search by route, cargo type, date and price, with ratings and direct contact instead of intermediaries. Four applications to production in four months: an administrative panel, a dispatcher workspace, a driver mobile application and the landing page.",
-    "tags": ["Angular 17", "ReactJS", "React Native", "NestJS"],
+    "tags": ["ReactJS", "React Native", "NestJS"],
     "links": [
-      { "label": "yukmarkaz24.uz", "href": "https://yukmarkaz24.uz/", "icon": "external" }
+      { "label": "Website", "href": "https://yukmarkaz24.uz/", "icon": "external" }
     ]
   },
   {
     "id": "qmed",
     "kicker": "Clinic platform",
     "title": "QMed",
-    "description": "An operating system for private clinics in Uzbekistan. Three products over one shared database: a reception web panel with the appointment grid, patient cards and owner analytics; a doctor's mobile application for the schedule and in-visit notes; and a public site for the clinic itself. Built for practices with two to ten consulting rooms.",
-    "tags": [],
+    "description": "A SaaS platform for small private clinics in Uzbekistan, where scheduling still runs on Excel, WhatsApp and paper. Three products over one API and one database: a keyboard-first desktop workspace for reception, a mobile application doctors use during the visit, and a public site for each clinic. Seven repositories sharing one documentation layer, with thirty-three decisions recorded as ADRs.",
+    "tags": ["NestJS", "PostgreSQL", "React", "React Native"],
     "links": [
-      { "label": "qmed.uz", "href": "https://qmed.uz/", "icon": "external" }
+      { "label": "Website", "href": "https://qmed.uz/", "icon": "external" }
     ]
   }
 ]
