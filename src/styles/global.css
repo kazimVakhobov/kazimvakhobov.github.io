@@ -162,14 +162,14 @@ pre code { padding: 0; background: none; }
 
 .avatar {
   display: block;
-  width: 112px; height: 112px;
+  width: 128px; height: 128px;
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--chip);
   border: 1px solid var(--line);
 }
 /* Кадрирование живёт в самом файле (см. Sidebar.astro), поэтому здесь
-   картинка просто заполняет квадрат — и в 112px приходит резкой. */
+   картинка просто заполняет квадрат — и в 128px приходит резкой. */
 .avatar img {
   width: 100%;
   height: 100%;

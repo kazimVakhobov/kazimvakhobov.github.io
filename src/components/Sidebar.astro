@@ -1,10 +1,10 @@
 ---
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
-// Кадрированный портрет: avatar.jpeg — поясной, и в кружке сайдбара лицо
-// занимало бы треть кадра. Кроп 318×318 из точки (193, 16) исходника,
-// линия глаз примерно на 40% высоты. Сам avatar.jpeg остаётся для og:image.
-import headshot from '../assets/headshot.jpeg';
+// Кадрирование живёт в самом файле, а не в CSS-трансформе: иначе Astro
+// собирает превью со всего снимка и в 128px лицо получается из полусотни
+// пикселей. Снимок обрезан до 510×510 — голова, плечи и скрещённые руки.
+import avatar from '../assets/avatar.jpeg';
 import site from '../data/site.json';
 
 // Шаблонные элементы с пустым текстом не показываем — заполнятся из словаря позже.
@@ -16,7 +16,7 @@ const hasCv = site.sidebar.cvHref.trim() !== '';
 <aside class="sidebar" id="sidebar">
   <div class="sidebar__top">
     <a class="avatar" href="/" aria-label={site.nav.home}>
-      <Image src={headshot} alt={site.sidebar.avatarAlt} widths={[112, 224]} sizes="112px" loading="eager" />
+      <Image src={avatar} alt={site.sidebar.avatarAlt} widths={[128, 256]} sizes="128px" loading="eager" />
     </a>
 
     <p class="sidebar__name">{site.sidebar.name}</p>
