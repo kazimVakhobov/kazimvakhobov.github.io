@@ -6,16 +6,13 @@ import site from '../data/site.json';
 import '../styles/global.css';
 
 interface Props {
-  /** Путь страницы: "/", "/projects/", "/projects/my-cli/" */
+  /** Путь страницы: "/" или "/404/" */
   path: string;
   title: string;
   description?: string;
   /** Абсолютный или относительный URL картинки для соцсетей */
   ogImage?: string;
-  ogType?: 'website' | 'article';
   isHome?: boolean;
-  /** Широкая колонка — для страниц проектов */
-  wide?: boolean;
   noindex?: boolean;
 }
 
@@ -24,9 +21,7 @@ const {
   title,
   description = '',
   ogImage,
-  ogType = 'website',
   isHome = false,
-  wide = false,
   noindex = false,
 } = Astro.props;
 
@@ -49,7 +44,7 @@ const fullTitle = isHome ? title : site.meta.titleTemplate.replace('%s', title);
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <meta property="og:type" content={ogType} />
+    <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:url" content={canonical} />
@@ -83,7 +78,7 @@ const fullTitle = isHome ? title : site.meta.titleTemplate.replace('%s', title);
     <div class="shell">
       <Header isHome={isHome} />
 
-      <main class:list={['main', { 'main--wide': wide }]} id="content">
+      <main class="main" id="content">
         <slot />
         <Footer />
       </main>

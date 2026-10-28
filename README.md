@@ -3,7 +3,7 @@
 Personal portfolio and website of Kazim Vakhobov — Senior Frontend Engineer.
 
 Built with [Astro](https://astro.build). Static output, English only,
-separate case study pages for open source projects.
+one page.
 
 ## Development
 
@@ -30,45 +30,35 @@ Array sections (`experience.items`, `skills.groups`, …) can hold an empty temp
 entry — copy one and fill it in. Entries whose main field (`role`, `degree`, `name`,
 `label`) is still empty are not rendered, so blank templates stay invisible on the site.
 
-### 2. Project case studies — `src/content/projects/`
+### 2. Projects — `src/data/projects.json`
 
-One Markdown file per project:
+Projects are cards in the `Projects` section of the home page; there are no
+separate project pages. One object per project, and the order in the file is the
+order on the page:
 
-```
-src/content/projects/
-├─ detent.md
-├─ har-kun-ai.md
-└─ my-cli.md
-```
-
-The file name becomes the URL: `my-cli.md` → `/projects/my-cli/`.
-
-- **Frontmatter** — structured data: badges, links, tech stack, metrics, media.
-  Schema is in `src/content.config.ts`, so a typo fails the build instead of the page.
-- **Markdown body** — free-form presentation: problem, solution, features,
-  architecture, code samples, screenshots.
-
-The existing case studies double as templates — `har-kun-ai.md` is the fullest one
-(stats, media, every frontmatter field in use). Copy one and edit it:
-
-```bash
-cp src/content/projects/har-kun-ai.md src/content/projects/my-cli.md
+```json
+{
+  "id": "my-cli",
+  "kicker": "Open source · developer tooling",
+  "title": "my-cli",
+  "description": "One or two sentences: what it does and why it exists.",
+  "tags": ["Node.js", "CLI"],
+  "links": [
+    { "label": "Source code", "href": "https://github.com/…", "icon": "github" },
+    { "label": "Website", "href": "https://…", "icon": "external" }
+  ]
+}
 ```
 
-New pages start as drafts: set `draft: true` while writing, flip it to `draft: false`
-when the page is ready. Drafts are visible in `npm run dev` and excluded from the build.
+Every key is required — leave a string empty or an array empty when there is
+nothing to show, and it simply is not rendered. `icon` is a name from
+`src/components/Icon.astro` (`github`, `external`, `play`, `docs`, `npm`, …);
+an unknown name falls back to the external-link icon.
 
 ## Routing
 
-| URL | Page |
-| --- | --- |
-| `/` | home — resume on one page |
-| `/projects/` | case study index with a tag filter |
-| `/projects/<slug>/` | one case study |
-
-Pages under `src/pages/` are thin wrappers; the actual markup is in `src/views/`.
-
-The sitemap is generated automatically.
+The site is one page, `/`, plus a `404`. Nav items are anchors into the sections
+of the home page. The sitemap is generated automatically.
 
 ## Deploy
 
