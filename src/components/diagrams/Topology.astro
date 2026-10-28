@@ -1,0 +1,69 @@
+---
+/**
+ * Схема 2. Связь репозиториев: один репозиторий документов, смонтированный
+ * сабмодулем в каждый код-репозиторий по одному и тому же пути.
+ *
+ * Одинаковый хеш во всех четырёх боксах — это и есть то, что схема
+ * показывает, поэтому он подставляется из одной константы.
+ */
+import './flow.css';
+
+const pinned = '9f2c1ab';
+
+const contents = ['spec/', 'adr/', 'tasks/', 'progress/', 'changelog/', 'agents/'];
+const repos = ['acme-api/', 'acme-web/', 'acme-mobile/', 'acme-admin/'];
+const here = 1;
+---
+
+<svg class="flow" viewBox="0 0 700 348" role="img" aria-label="A session writes into the shared-docs repository, which is mounted as a submodule at the same path in all four code repositories.">
+  <!-- кто пишет в документы -->
+  <rect class="flow-box flow-box--accent" x="275" y="0" width="150" height="44" rx="7" />
+  <text class="flow-title flow-title--sans flow-accent" x="350" y="27" text-anchor="middle">a session</text>
+  <path class="flow-edge flow-edge--accent" d="M350 44 V70" />
+  <text class="flow-label flow-accent" x="360" y="64">a person and an agent, writing</text>
+
+  <!-- репозиторий документов -->
+  <rect class="flow-box flow-box--accent" x="108" y="76" width="484" height="104" rx="7" />
+  <text class="flow-title flow-accent" x="124" y="106">shared-docs</text>
+  <text class="flow-sub" x="232" y="106">one repository, no code</text>
+  {
+    contents.map((dir, i) => (
+      <>
+        <rect class="flow-chip flow-chip--accent" x={122 + i * 77} y="126" width="72" height="28" rx="5" />
+        <text class="flow-mono flow-accent" x={158 + i * 77} y="145" text-anchor="middle">{dir}</text>
+      </>
+    ))
+  }
+
+  <!-- развилка в каждый код-репозиторий -->
+  <!-- спуск к рейке смещён влево: по центру он упирался бы в подпись -->
+  <path class="flow-edge flow-edge--thin" d="M150 180 V212 M96 212 H606" />
+  <text class="flow-label" x="358" y="204" text-anchor="middle">mounted as a submodule — the same path in each</text>
+  {repos.map((_, i) => <path class="flow-edge" d={`M${96 + i * 170} 212 V238`} />)}
+
+  <!-- код-репозитории -->
+  {
+    repos.map((name, i) => (
+      <>
+        <rect
+          class:list={['flow-box', { 'flow-box--accent': i === here }]}
+          x={16 + i * 170}
+          y="244"
+          width="160"
+          height="78"
+          rx="7"
+        />
+        <text class="flow-title" x={30 + i * 170} y="268">{name}</text>
+        <rect class="flow-chip flow-chip--accent" x={30 + i * 170} y="280" width="118" height="22" rx="4" />
+        <text class="flow-mono flow-accent" x={39 + i * 170} y="295">shared-docs/</text>
+        <text class="flow-mono" x={39 + i * 170} y="314">@ {pinned}</text>
+      </>
+    ))
+  }
+  <text class="flow-kicker flow-accent" x={16 + here * 170} y="340">the agent works here</text>
+</svg>
+
+<ul class="flow-legend">
+  <li><i class="is-accent"></i>written by a person and an agent together</li>
+  <li><i></i>read-only wherever it is mounted</li>
+</ul>

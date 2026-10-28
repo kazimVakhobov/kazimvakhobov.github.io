@@ -9,7 +9,9 @@ interface Props {
 
 const { isHome = false } = Astro.props;
 
-const sections = ['about', 'experience', 'projects', 'education', 'skills', 'contact'] as const;
+// Порядок = порядок разделов на главной: подсветка активного пункта
+// считает, что массив идёт в том же порядке, что и документ.
+const sections = ['about', 'experience', 'projects', 'methodology', 'education', 'skills', 'contact'] as const;
 
 // Все разделы живут на главной: с неё — якорь, с 404 — якорь на главной.
 const href = (id: (typeof sections)[number]) => (isHome ? `#${id}` : `/#${id}`);

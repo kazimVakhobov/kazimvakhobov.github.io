@@ -6,12 +6,18 @@ import site from '../data/site.json';
 import '../styles/global.css';
 
 interface Props {
-  /** Путь страницы: "/" или "/404/" */
+  /** Путь страницы с завершающим слэшем: "/", "/404/", "/<slug>/" */
   path: string;
   title: string;
   description?: string;
   /** Абсолютный или относительный URL картинки для соцсетей */
   ogImage?: string;
+  /** Альт к ogImage; по умолчанию — общий из site.json */
+  ogImageAlt?: string;
+  /** "article" для текстовых страниц — у них в превью появляется дата */
+  ogType?: 'website' | 'article';
+  /** Дата публикации в ISO, только для ogType="article" */
+  published?: string;
   isHome?: boolean;
   noindex?: boolean;
 }
@@ -21,6 +27,9 @@ const {
   title,
   description = '',
   ogImage,
+  ogImageAlt = site.meta.ogAlt,
+  ogType = 'website',
+  published,
   isHome = false,
   noindex = false,
 } = Astro.props;
@@ -44,13 +53,16 @@ const fullTitle = isHome ? title : site.meta.titleTemplate.replace('%s', title);
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:title" content={fullTitle} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="en" />
+    <meta property="og:site_name" content={site.sidebar.name} />
     {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
-    {ogImageUrl && site.meta.ogAlt && <meta property="og:image:alt" content={site.meta.ogAlt} />}
+    {ogImageUrl && ogImageAlt && <meta property="og:image:alt" content={ogImageAlt} />}
+    {ogType === 'article' && published && <meta property="article:published_time" content={published} />}
+    {ogType === 'article' && <meta property="article:author" content={site.sidebar.name} />}
     <meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

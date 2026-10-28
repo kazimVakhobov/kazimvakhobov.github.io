@@ -11,6 +11,7 @@
     "about": "About",
     "experience": "Experience",
     "projects": "Projects",
+    "methodology": "Methodology",
     "education": "Education",
     "skills": "Skills",
     "contact": "Contact"
@@ -186,6 +187,26 @@
     "heading": "Projects",
     "lead": "Products and tools I have built — the source where it is open, the live site where it is not.",
     "empty": "Nothing here yet."
+  },
+  "writeup": {
+    "heading": "Methodology",
+    "lead": "The way I run agentic development: one documentation repository, mounted into every code repository as a git submodule, read-only everywhere.",
+    "slug": "/agents-need-context-not-access/",
+    "kicker": "Methodology",
+    "title": "Agents need context, not access",
+    "description": "Agentic development is pushing teams into monorepos so an agent can see the neighbouring service. There is another way: one documentation repository, mounted into every code repository as a git submodule and read-only everywhere. The mechanism, what it costs, and the part that stopped being doable by hand.",
+    "ogAlt": "Agents need context, not access — shared-docs mounted as a submodule in every repository of a product",
+    "published": "2026-10-28",
+    "date": "28 October 2026",
+    "readingTime": "5 min read",
+    "teaser": "Agents read what is on disk, which is why agentic development keeps pushing teams into monorepos. It buys context by deleting the access boundary — an agent whose screen fails on a bad endpoint can go and change the endpoint. I keep one repository per surface and give every one of them the same documentation repository as a submodule: the whole product is readable, one repository is writable.",
+    "points": [
+      "One repository per surface, plus shared-docs mounted at the same path in each — specifications, ADRs, task queue, progress and changelogs",
+      "The boundary is mechanical, not an instruction: the neighbouring service is simply not in the working copy",
+      "A submodule pins a commit, so detent refreshes it, records which revision the agent read, and refuses to commit a pointer nobody can reach"
+    ],
+    "cta": "Read the write-up",
+    "backHome": "Back to the home page"
   },
   "education": {
     "heading": "Education",

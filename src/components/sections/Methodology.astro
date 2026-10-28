@@ -1,0 +1,126 @@
+---
+/**
+ * Входная точка на главной: анонс отдельной страницы с методологией.
+ * Сама статья живёт по своему адресу (site.writeup.slug), чтобы ссылку
+ * можно было отправить без всего остального портфолио.
+ */
+import Icon from '../Icon.astro';
+import site from '../../data/site.json';
+
+const w = site.writeup;
+---
+
+<section class="section" id="methodology">
+  <h2 class="section__title">{w.heading}</h2>
+  {w.lead && <p class="section__lead">{w.lead}</p>}
+
+  <a class="feature" href={w.slug}>
+    <p class="feature__kicker">
+      <Icon name="docs" />
+      <span>{w.kicker}</span>
+      <span class="feature__dot">·</span>
+      <span>{w.readingTime}</span>
+    </p>
+
+    <h3 class="feature__title">{w.title}</h3>
+    <p class="feature__text">{w.teaser}</p>
+
+    <ul class="bullets feature__points">
+      {w.points.map((point) => <li>{point}</li>)}
+    </ul>
+
+    <span class="feature__cta">
+      <span>{w.cta}</span>
+      <Icon name="arrowRight" />
+    </span>
+  </a>
+</section>
+
+<style>
+  .feature {
+    display: grid;
+    gap: 12px;
+    padding: 20px 22px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    transition: border-color 0.18s, background 0.18s;
+  }
+
+  .feature:hover {
+    border-color: var(--accent);
+  }
+
+  .feature__kicker {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin: 0;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  /* :global — иконка приходит из <Icon> со своим scope */
+  .feature__kicker :global(svg) {
+    width: 13px;
+    height: 13px;
+    flex: none;
+    color: var(--accent);
+  }
+
+  .feature__dot {
+    letter-spacing: 0;
+  }
+
+  .feature__title {
+    font-size: 23px;
+    margin: 0;
+  }
+
+  .feature:hover .feature__title {
+    color: var(--accent);
+  }
+
+  .feature__text {
+    margin: 0;
+    font-size: 14.5px;
+    color: var(--muted);
+  }
+
+  .feature__points {
+    font-size: 14px;
+  }
+
+  .feature__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 2px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--accent);
+  }
+
+  .feature__cta :global(svg) {
+    width: 15px;
+    height: 15px;
+    flex: none;
+    transition: transform 0.18s;
+  }
+
+  .feature:hover .feature__cta :global(svg) {
+    transform: translateX(3px);
+  }
+
+  @media (max-width: 560px) {
+    .feature {
+      padding: 17px 16px;
+    }
+
+    .feature__title {
+      font-size: 21px;
+    }
+  }
+</style>

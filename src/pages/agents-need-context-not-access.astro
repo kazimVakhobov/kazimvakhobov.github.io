@@ -1,0 +1,400 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import Figure from '../components/diagrams/Figure.astro';
+import FlowDefs from '../components/diagrams/FlowDefs.astro';
+import WriteReach from '../components/diagrams/WriteReach.astro';
+import Topology from '../components/diagrams/Topology.astro';
+import LoopCycle from '../components/diagrams/LoopCycle.astro';
+import PointerDrift from '../components/diagrams/PointerDrift.astro';
+import RunFlow from '../components/diagrams/RunFlow.astro';
+import Tradeoff from '../components/diagrams/Tradeoff.astro';
+import site from '../data/site.json';
+
+const w = site.writeup;
+
+const url = new URL(w.slug, Astro.site).href;
+const share = [
+  { icon: 'twitter', label: 'X', href: `https://twitter.com/intent/tweet?text=${encodeURIComponent(w.title)}&url=${encodeURIComponent(url)}` },
+  { icon: 'linkedin', label: 'LinkedIn', href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}` },
+  { icon: 'telegram', label: 'Telegram', href: `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(w.title)}` },
+];
+
+const DETENT = 'https://github.com/kazimVakhobov/detent';
+const ADR = `${DETENT}/blob/main/docs/adr/0012-the-queue-and-the-shared-context-may-be-repositories.md`;
+---
+
+<BaseLayout
+  path={w.slug}
+  title={w.title}
+  description={w.description}
+  ogImage="/og/agents-need-context-not-access.png"
+  ogImageAlt={w.ogAlt}
+  ogType="article"
+  published={w.published}
+>
+  <FlowDefs />
+
+  <article class="post">
+    <header class="post__head">
+      <p class="post__kicker">{w.kicker}</p>
+      <h1 class="hero__title">{w.title}</h1>
+
+      <p class="post__stand">
+        Agentic development keeps pushing teams into monorepos, so that an agent can see the
+        service next door. One documentation repository, mounted into every code repository as
+        a git submodule, hands it the same context without the same reach.
+      </p>
+
+      <p class="post__meta">
+        <span>{w.date}</span>
+        <span class="post__sep">·</span>
+        <span>{w.readingTime}</span>
+        <span class="post__sep">·</span>
+        <span>{site.sidebar.name}</span>
+      </p>
+
+      <div class="share">
+        {
+          share.map((item) => (
+            <a class="share__btn" href={item.href} target="_blank" rel="noopener" aria-label={`Share on ${item.label}`}>
+              <Icon name={item.icon} />
+            </a>
+          ))
+        }
+        <button class="share__copy" type="button" data-copy={url} data-copied-label={site.contact.copied}>
+          Copy link
+        </button>
+      </div>
+    </header>
+
+    <h2>The trade a monorepo makes</h2>
+
+    <p>
+      An agent reads what is on disk. Put four surfaces in one working copy and it finally has
+      the context — and write access to all four.
+    </p>
+
+    <p>
+      So when the screen fails because the endpoint returns the wrong shape, changing the
+      endpoint is the shortest path to green. It will take it. Same incentive that gets a failing
+      test edited instead of the code, with a wider radius.
+    </p>
+
+    <Figure label="Figure 1" scroll>
+      <WriteReach />
+      <Fragment slot="caption">
+        Both rows give the agent the whole product. Only one of them also gives it the whole
+        product to write to.
+      </Fragment>
+    </Figure>
+
+    <p class="pull">I want the context. I do not want the reach.</p>
+
+    <h2>One repository holds the documents</h2>
+
+    <p>
+      Every surface keeps its own repository. One more joins them and holds no
+      code: <code>shared-docs</code> — specifications, decisions as numbered ADRs, the task
+      queue, a progress log per surface, changelogs. It is mounted into each code repository as
+      a submodule, at the same path in all of them.
+    </p>
+
+    <p>
+      A session — a person and an agent together — writes there. A dispatched agent only reads.
+    </p>
+
+    <Figure label="Figure 2" scroll>
+      <Topology />
+      <Fragment slot="caption">
+        <strong>The identical path is load-bearing, not tidiness.</strong> <code>shared-docs/adr/0003.md</code>
+        names the same file from the API and from the mobile application, so a link written once
+        resolves everywhere.
+      </Fragment>
+    </Figure>
+
+    <h2>The loop</h2>
+
+    <Figure label="Figure 3" scroll>
+      <LoopCycle />
+    </Figure>
+
+    <p>
+      The boundary holds mechanically rather than by instruction. <code>acme-api/</code> is not
+      in the working copy: an instruction not to touch something is a request, and an absent
+      directory is not. The blast radius of a bad run is one repository — which is also the unit
+      you revert, review and grant access to.
+    </p>
+
+    <h2>The friction: a pointer is a pin</h2>
+
+    <p>
+      A submodule points at one commit and stays there until somebody moves it. That is right for
+      the thing submodules were built for — vendoring a library — and backwards
+      here: <code>shared-docs</code> is not a dependency of the web client, it is the same
+      product written down, and the whole point of it is that it is current.
+    </p>
+
+    <Figure label="Figure 4" scroll>
+      <PointerDrift />
+      <Fragment slot="caption">
+        <strong>One push, N stale pointers.</strong> Nobody did anything wrong in any of those
+        four repositories — that is the problem. No diff to review, no check that fails.
+      </Fragment>
+    </Figure>
+
+    <p>
+      So after every write to the documents: <code>git submodule update --remote</code> in each
+      repository, then commit the moved pointer. I did that by hand for months, across four
+      repositories and then seven. Skip it once and an agent builds against Tuesday's
+      specification — correctly, and it passes every check you have.
+    </p>
+
+    <p>
+      Doing half of it is worse. The update without the commit leaves the superproject
+      reporting <code>M shared-docs</code>: a dirty tree holding nobody's work, which every
+      check that refuses to run in one now refuses.
+    </p>
+
+    <h2>What detent automates</h2>
+
+    <p>
+      <a href={DETENT}>detent</a> runs coding agents against a queue of tasks and lets nothing
+      finish until the repository's own checks pass. Four moments in a run belong to the
+      submodules; between them it does not touch them at all.
+    </p>
+
+    <Figure label="Figure 5" scroll>
+      <RunFlow />
+      <Fragment slot="caption">
+        A submodule you want none of this for goes in <code>neverCommit</code>: then it is not
+        fetched, not moved and not committed, and the agent is told to leave it alone.
+      </Fragment>
+    </Figure>
+
+    <p>
+      Two of the four I would not have got right by hand. <strong>The commit records what was
+      read</strong> — the moved pointer goes into the task's own commit, so the history answers
+      "which revision was this built against" instead of somebody's memory. <strong>And it is
+      verified before it is recorded</strong> — a commit claiming the agent read revision X when
+      it read Y is worse than no record at all, because it looks like one. Written up
+      as <a href={ADR}>ADR 0012</a>.
+    </p>
+
+    <h2>The trade, line by line</h2>
+
+    <Figure label="Figure 6">
+      <Tradeoff />
+    </Figure>
+
+    <p>
+      None of it is free. The context layer is not generated: if it is not written, there is
+      nothing to read and the agent goes back to inferring. And a document is checked by somebody
+      reading it, not by a compiler. I would argue for writing the specification first anyway —
+      it is still work.
+    </p>
+
+    <h2>Where it has run</h2>
+
+    <ul class="bullets post__ran">
+      <li><strong>Yuk Markaz 24</strong> — a freight logistics platform: four applications to production in four months, built in parallel over this layer.</li>
+      <li><strong>QMed</strong> — a platform for private clinics: seven repositories over one API, one documentation layer, thirty-three ADRs.</li>
+      <li><strong>detent</strong> — the tool, open source.</li>
+    </ul>
+
+    <div class="post__links">
+      <a class="btn btn--primary" href={DETENT} target="_blank" rel="noopener">
+        <Icon name="github" />
+        <span>detent on GitHub</span>
+      </a>
+      <a class="btn btn--ghost" href="https://detent.kazimvakhobov.com/" target="_blank" rel="noopener">
+        <Icon name="external" />
+        <span>detent.kazimvakhobov.com</span>
+      </a>
+    </div>
+
+    <p class="post__back">
+      <a href="/">
+        <Icon name="arrowLeft" />
+        <span>{w.backHome}</span>
+      </a>
+    </p>
+  </article>
+</BaseLayout>
+
+<style>
+  .post {
+    padding-top: 8px;
+  }
+
+  /* --- шапка --- */
+
+  .post__head {
+    padding-bottom: 34px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .post__kicker {
+    margin: 0 0 14px;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .post__stand {
+    margin: 20px 0 0;
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+
+  .post__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+    margin: 22px 0 0;
+    font-size: 13px;
+    color: var(--faint);
+  }
+
+  .post__sep {
+    opacity: 0.6;
+  }
+
+  .share {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .share__btn {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--muted);
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  /* :global — иконки приходят из <Icon> со своим scope */
+  .share__btn :global(svg) {
+    width: 16px;
+    height: 16px;
+  }
+
+  .share__btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .share__copy {
+    height: 34px;
+    padding: 0 13px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    font-size: 13px;
+    color: var(--muted);
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .share__copy:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* --- текст ---
+     Селекторы от прямых детей <article>: в шапке лежат свои <p> со своими
+     размерами, и правила основного текста не должны до них доставать. */
+
+  .post > h2 {
+    font-size: 24px;
+    margin: 46px 0 16px;
+  }
+
+  .post > p {
+    margin: 0 0 15px;
+    color: var(--muted);
+  }
+
+  .post > p strong,
+  .post > ul strong {
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  .post > p a,
+  .post > ul a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Ключевая мысль статьи: вынос в отступ, без кавычек и курсива */
+  .post > p.pull {
+    margin: 26px 0;
+    padding: 2px 0 2px 20px;
+    border-left: 2px solid var(--accent);
+    font-family: var(--serif);
+    font-size: 21px;
+    line-height: 1.45;
+    color: var(--fg);
+  }
+
+  .post > ul.post__ran {
+    gap: 12px;
+    font-size: 14.5px;
+  }
+
+  .post__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 26px;
+    padding-top: 26px;
+    border-top: 1px solid var(--line);
+  }
+
+  .post > p.post__back {
+    margin: 26px 0 0;
+    font-size: 13.5px;
+  }
+
+  .post__back a {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .post__back a:hover {
+    color: var(--accent);
+  }
+
+  .post__back :global(svg) {
+    width: 15px;
+    height: 15px;
+    flex: none;
+  }
+
+  @media (max-width: 560px) {
+    .post__stand {
+      font-size: 16px;
+    }
+
+    .post > h2 {
+      font-size: 22px;
+      margin-top: 38px;
+    }
+
+    .post > p.pull {
+      font-size: 18.5px;
+    }
+  }
+</style>

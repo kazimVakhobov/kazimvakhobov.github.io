@@ -1,0 +1,51 @@
+---
+/**
+ * Схема 3. Цикл: кто пишет, куда и в каком порядке. Замкнут намеренно —
+ * следующая задача стартует из записанного факта, а не из памяти.
+ */
+import './flow.css';
+---
+
+<svg class="flow" viewBox="0 0 700 312" role="img" aria-label="A session writes the documents, detent moves the submodule pointer, the agent works in one repository, and the result is written back into the documents.">
+  <!-- 1. сессия пишет документы -->
+  <rect class="flow-box flow-box--accent" x="20" y="50" width="250" height="86" rx="7" />
+  <text class="flow-title flow-accent" x="36" y="76">shared-docs</text>
+  <text class="flow-sub" x="36" y="98">spec · acceptance criteria · progress</text>
+  <text class="flow-sub" x="36" y="116">written, committed, pushed</text>
+
+  <path class="flow-edge flow-edge--accent" d="M276 93 H424" />
+  <text class="flow-label flow-accent" x="350" y="82" text-anchor="middle">a person's hand</text>
+
+  <!-- 2. detent двигает указатель -->
+  <rect class="flow-box flow-box--ok" x="430" y="50" width="250" height="86" rx="7" />
+  <text class="flow-title flow-ok" x="446" y="76">acme-web</text>
+  <text class="flow-sub" x="446" y="98">the pointer moved to that commit</text>
+  <text class="flow-mono" x="446" y="116">submodule update --remote</text>
+
+  <path class="flow-edge" d="M555 136 V200" />
+  <text class="flow-label" x="565" y="172">dispatched</text>
+
+  <!-- 3. ход агента -->
+  <rect class="flow-box" x="430" y="206" width="250" height="86" rx="7" />
+  <text class="flow-title" x="446" y="232">the agent's turn</text>
+  <text class="flow-sub" x="446" y="254">reads shared-docs/ · writes src/</text>
+  <text class="flow-sub" x="446" y="272">one working copy, nothing else</text>
+
+  <path class="flow-edge" d="M424 249 H276" />
+  <text class="flow-label" x="350" y="238" text-anchor="middle">the result</text>
+
+  <!-- 4. результат возвращается в документы -->
+  <rect class="flow-box flow-box--accent" x="20" y="206" width="250" height="86" rx="7" />
+  <text class="flow-title flow-accent" x="36" y="232">shared-docs</text>
+  <text class="flow-sub" x="36" y="254">progress · changelog · the next task</text>
+  <text class="flow-sub" x="36" y="272">what it finished, written down</text>
+
+  <path class="flow-edge flow-edge--accent" d="M145 206 V142" />
+  <text class="flow-label flow-accent" x="155" y="176">and round again</text>
+</svg>
+
+<ul class="flow-legend">
+  <li><i class="is-accent"></i>a person and an agent, together</li>
+  <li><i class="is-ok"></i>detent, on its own</li>
+  <li><i></i>the agent, alone</li>
+</ul>
