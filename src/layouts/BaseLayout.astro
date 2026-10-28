@@ -141,18 +141,38 @@ const fullTitle = isHome ? title : site.meta.titleTemplate.replace('%s', title);
           .map((a) => document.getElementById(a.getAttribute('href')!.slice(1)))
           .filter((el): el is HTMLElement => el !== null);
 
+        // Какие разделы сейчас в полосе наблюдения — состояние держим сами.
+        // Сравнивать по intersectionRatio нельзя: он нормирован на высоту цели,
+        // поэтому длинный раздел всегда проигрывает короткому соседу и мимо
+        // низкого порога не проходит вовсе.
+        const inBand = new Set<Element>();
+
+        const atBottom = () =>
+          window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+
+        const update = () => {
+          // В конце страницы последний раздел до полосы уже не доезжает.
+          let active = atBottom() ? sections[sections.length - 1] : undefined;
+
+          // Иначе — последний по порядку документа, то есть тот, в который только что вошли.
+          for (let i = sections.length - 1; !active && i >= 0; i--) {
+            if (inBand.has(sections[i])) active = sections[i];
+          }
+
+          if (!active) return;
+          navLinks.forEach((a) => a.classList.toggle('is-active', a.dataset.section === active!.id));
+        };
+
         const observer = new IntersectionObserver(
           (entries) => {
-            const visible = entries
-              .filter((e) => e.isIntersecting)
-              .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-            if (!visible) return;
-            navLinks.forEach((a) => a.classList.toggle('is-active', a.dataset.section === visible.target.id));
+            entries.forEach((e) => (e.isIntersecting ? inBand.add(e.target) : inBand.delete(e.target)));
+            update();
           },
-          { rootMargin: '-25% 0px -60% 0px', threshold: [0, 0.2, 0.6] }
+          { rootMargin: '-25% 0px -60% 0px' }
         );
 
         sections.forEach((section) => observer.observe(section));
+        window.addEventListener('scroll', update, { passive: true });
       }
 
       // --- Кнопки «скопировать» ---------------------------------------------
