@@ -17,7 +17,8 @@
     "description": "A streaming chat with a language model that can be stopped mid-sentence without losing what already arrived. The API key never reaches the browser, and the whole interface runs with no key at all against a built-in mock.",
     "tags": ["React", "TypeScript", "LLM"],
     "links": [
-      { "label": "Source code", "href": "https://github.com/kazimVakhobov/har-kun-ai", "icon": "github" }
+      { "label": "Source code", "href": "https://github.com/kazimVakhobov/har-kun-ai", "icon": "github" },
+      { "label": "Website", "href": "https://kazimvakhobov.github.io/har-kun-ai/", "icon": "external" }
     ]
   },
   {
@@ -38,6 +39,16 @@
     "tags": ["NestJS", "PostgreSQL", "React", "React Native"],
     "links": [
       { "label": "Website", "href": "https://qmed.uz/", "icon": "external" }
+    ]
+  },
+  {
+    "id": "green-api-telegram-client",
+    "kicker": "Test assignment",
+    "title": "GREEN-API Telegram client",
+    "description": "A test assignment for GREEN-API: a web chat that sends and receives Telegram messages over their HTTP API, modelled on web.telegram.org so there is nothing to learn. The provider gives raw stateless calls and nothing else — no session, no chat list, no history — so everything a user thinks of as a messenger is built on the client over long polling and localStorage.",
+    "tags": ["React", "TypeScript", "Integration"],
+    "links": [
+      { "label": "Source code", "href": "https://github.com/kazimVakhobov/green-api-telegram-client", "icon": "github" }
     ]
   }
 ]
