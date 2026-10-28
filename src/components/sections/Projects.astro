@@ -21,7 +21,8 @@ const hasMore = projects.length > shown.length;
   <div class="section__head">
     <h2 class="section__title">{site.projects.heading}</h2>
     {
-      (hasMore || shown.length > 0) && (
+      /* Ведём на список только когда там есть что-то сверх показанного здесь. */
+      hasMore && (
         <a class="link-more" href="/projects/">
           {site.projects.all} →
         </a>

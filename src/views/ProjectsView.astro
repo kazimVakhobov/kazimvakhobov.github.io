@@ -6,6 +6,9 @@ import { getProjects, allTags } from '../lib/projects';
 
 const projects = await getProjects();
 const tags = allTags(projects);
+
+/** С какого количества проектов фильтр по тегам начинает что-то давать. */
+const FILTER_FROM = 4;
 ---
 
 <BaseLayout
@@ -24,7 +27,8 @@ const tags = allTags(projects);
     {site.projects.lead && <p class="section__lead">{site.projects.lead}</p>}
 
     {
-      tags.length > 1 && (
+      /* Пока проектов мало, каждый тег выделяет ровно один из них — фильтровать нечего. */
+      projects.length >= FILTER_FROM && tags.length > 1 && (
         <div class="chips" id="project-filter" style="margin-bottom:22px">
           <button class="chip chip--button" type="button" data-tag="*" aria-pressed="true">
             {site.projects.filterAll}
