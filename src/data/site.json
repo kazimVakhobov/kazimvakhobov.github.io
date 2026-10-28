@@ -70,6 +70,16 @@
         "href": "https://t.me/kazimvakhobov"
       },
       {
+        "icon": "broadcast",
+        "label": "Telegram channel — Digital Diary",
+        "href": "https://t.me/digital_diary"
+      },
+      {
+        "icon": "instagram",
+        "label": "Instagram",
+        "href": "https://instagram.com/kozimjonvaxobov"
+      },
+      {
         "icon": "npm",
         "label": "npm",
         "href": "https://npmjs.com/~kazimvakhobov"
@@ -326,6 +336,16 @@
         "icon": "telegram",
         "label": "Telegram",
         "href": "https://t.me/kazimvakhobov"
+      },
+      {
+        "icon": "broadcast",
+        "label": "Digital Diary",
+        "href": "https://t.me/digital_diary"
+      },
+      {
+        "icon": "instagram",
+        "label": "Instagram",
+        "href": "https://instagram.com/kozimjonvaxobov"
       },
       {
         "icon": "linkedin",

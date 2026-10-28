@@ -162,20 +162,18 @@ pre code { padding: 0; background: none; }
 
 .avatar {
   display: block;
-  width: 96px; height: 96px;
+  width: 128px; height: 128px;
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--chip);
   border: 1px solid var(--line);
 }
-/* Исходник — портрет в полный рост, в 96px лицо было бы неразличимо.
-   Масштабируем от точки на уровне лица, чтобы кадрировать его без правки файла. */
+/* Кадрирование живёт в самом файле (см. Sidebar.astro), поэтому здесь
+   картинка просто заполняет квадрат — и в 128px приходит резкой. */
 .avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scale(2.1);
-  transform-origin: 52% 26%;
 }
 
 .facts {
@@ -192,7 +190,8 @@ pre code { padding: 0; background: none; }
 .facts span, .facts a { min-width: 0; overflow-wrap: anywhere; }
 .facts a:hover { color: var(--accent); }
 
-.socials { display: flex; gap: 18px; color: var(--muted); }
+/* Семь иконок в 244px колонки — впритык, поэтому gap меньше и перенос разрешён */
+.socials { display: flex; flex-wrap: wrap; gap: 14px 16px; color: var(--muted); }
 .socials svg { width: 17px; height: 17px; }
 .socials a:hover { color: var(--fg); }
 
