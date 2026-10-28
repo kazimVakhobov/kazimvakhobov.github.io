@@ -102,21 +102,30 @@ automatically.
 
 ## Deploy
 
-Static output — any static host works. Recommended: **Cloudflare Pages**
-(free, unlimited bandwidth, apex domain support).
+**GitHub Pages**, built by `.github/workflows/pages.yml` on every push to
+`master` — `npm ci`, `npm run build`, then `dist/` is uploaded and deployed.
+Work happens on `dev` and reaches `master` through a pull request, so nothing
+deploys by accident.
 
-1. Push the repository to GitHub.
-2. Cloudflare dashboard → Workers & Pages → Create → Pages → connect the repo.
-3. Build command `npm run build`, output directory `dist`, Node version 22.
-4. Custom domains → add `kazimvakhobov.com` and `www.kazimvakhobov.com`.
-   If the domain's DNS is on Cloudflare, the apex record is created automatically;
-   otherwise point the apex at the Pages target and `www` at a CNAME.
+The repository is the user site, `kazimvakhobov.github.io`, which is what puts
+the site at the root of that host rather than under `/portfolio/`. Renaming it
+would mean setting `base` in `astro.config.mjs` and fixing every absolute path.
+
+The custom domain is `kazimvakhobov.com`, and `public/CNAME` carries it into
+every build — the Actions deployment serves exactly what the artifact contains,
+so the file has to be in the source rather than only in the repository settings.
+Once the domain is set, `kazimvakhobov.github.io` redirects to it.
+
+DNS lives at Namecheap. The apex needs four A records to GitHub's Pages
+addresses — `185.199.108.153`, `.109.153`, `.110.153`, `.111.153` — and `www`
+needs a CNAME to `kazimvakhobov.github.io`. The same zone already serves
+`detent.kazimvakhobov.com` the same way.
 
 Alternatives, same output:
 
+- **Cloudflare Pages** — connect the repo, build `npm run build`, output `dist`,
+  Node 22; add both the apex and `www` under Custom domains.
 - **Netlify** — build `npm run build`, publish `dist`, custom domains on the free plan.
-- **GitHub Pages** — needs a workflow with `withastro/action`; apex domain via A records
-  to GitHub's IPs plus a `CNAME` file in `public/`.
 - **Own VPS** — `npm run build`, copy `dist/` to the server, serve it with nginx:
 
   ```nginx
