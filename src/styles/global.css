@@ -384,24 +384,29 @@ code, pre, kbd { font-family: var(--mono); }
 
 /* ============================ CARDS ============================ */
 
-/* Список во всю ширину: одна карточка в строке, внутри — название слева,
-   описание и ссылки справа. */
+/* Список во всю ширину: одна карточка в строке. Шапка горизонтальная —
+   название слева, ссылки справа, — описание под ней на всю ширину. */
 .cards { display: grid; gap: 14px; }
 .card {
   display: grid;
-  grid-template-columns: minmax(165px, 215px) 1fr;
-  gap: 20px;
+  gap: 12px;
   padding: 18px 20px;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--surface);
 }
-.card__head { display: grid; gap: 4px; align-content: start; }
-.card__main { display: grid; gap: 10px; align-content: start; }
+.card__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 6px 20px;
+}
+.card__head { display: grid; gap: 3px; }
 .card__kicker { font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--faint); margin: 0; }
 .card__title { font-family: var(--sans); font-size: 16px; font-weight: 600; letter-spacing: 0; }
 .card__text { color: var(--muted); font-size: 14px; margin: 0; }
-.card__links { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 2px; }
+.card__links { display: flex; flex-wrap: wrap; gap: 16px; }
 .card__link { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--accent); }
 .card__link svg { width: 14px; height: 14px; flex: none; }
 .card__link:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -490,9 +495,6 @@ code, pre, kbd { font-family: var(--mono); }
   .section { padding: 36px 0; }
   .hero { padding-bottom: 36px; }
   .footer { padding-bottom: 28px; }
-
-  /* Две колонки в карточке перестают помещаться — складываем в одну. */
-  .card { grid-template-columns: 1fr; gap: 12px; }
 }
 
 @media print {
