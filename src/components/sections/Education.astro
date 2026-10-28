@@ -1,7 +1,9 @@
 ---
+import Icon from '../Icon.astro';
 import site from '../../data/site.json';
 
 const items = site.education.items.filter((item) => item.degree.trim() !== '' || item.school.trim() !== '');
+const certificates = site.education.certificates.filter((c) => c.title.trim() !== '');
 ---
 
 <section class="section" id="education">
@@ -22,4 +24,30 @@ const items = site.education.items.filter((item) => item.degree.trim() !== '' ||
       ))
     }
   </ol>
+
+  {
+    certificates.length > 0 && (
+      <div class="certs">
+        <h3 class="skills__group-name">{site.education.certificatesHeading}</h3>
+        <ul class="certs__list">
+          {certificates.map((cert) => (
+            <li>
+              <p class="certs__title">{cert.title}</p>
+              <p class="certs__meta">
+                {cert.issuer && <span>{cert.issuer}</span>}
+                {cert.period && <span>{cert.period}</span>}
+                {cert.id && <span>{cert.id}</span>}
+              </p>
+              {cert.href && (
+                <a class="certs__link" href={cert.href} target="_blank" rel="noopener">
+                  <Icon name="external" />
+                  <span>{site.education.verify}</span>
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
 </section>

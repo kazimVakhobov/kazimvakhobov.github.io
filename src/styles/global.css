@@ -414,6 +414,30 @@ code, pre, kbd { font-family: var(--mono); }
 /* .timeline svg — иконки в блоке опыта */
 .timeline svg { width: 15px; height: 15px; flex: none; }
 
+/* ============================ CERTIFICATES ============================ */
+
+.certs { margin-top: 30px; padding-top: 24px; border-top: 1px solid var(--line); }
+.certs__list { display: grid; gap: 16px; }
+.certs__title { font-size: 15px; font-weight: 600; margin: 0; }
+.certs__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin: 3px 0 0;
+  font-size: 13px;
+  color: var(--faint);
+}
+.certs__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--accent);
+}
+.certs__link svg { width: 14px; height: 14px; flex: none; }
+.certs__link:hover { text-decoration: underline; text-underline-offset: 3px; }
+
 /* ============================ CONTACT / FOOTER ============================ */
 
 .mailbox {

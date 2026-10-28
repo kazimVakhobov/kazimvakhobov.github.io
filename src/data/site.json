@@ -33,8 +33,8 @@
       },
       {
         "icon": "phone",
-        "label": "+998 90 309 30 49",
-        "href": "tel:+998903093049"
+        "label": "+998 94 309 30 49",
+        "href": "tel:+998943093049"
       },
       {
         "icon": "briefcase",
@@ -197,6 +197,17 @@
         "location": "Tashkent, Uzbekistan",
         "note": ""
       }
+    ],
+    "certificatesHeading": "Certificates",
+    "verify": "Verify",
+    "certificates": [
+      {
+        "title": "Developer qualification certificate",
+        "issuer": "GREEN-API",
+        "period": "October 2026",
+        "id": "No. 2244565",
+        "href": "https://green-api.com/certificates/developer/25dacfdcaffd4fa3.pdf"
+      }
     ]
   },
   "skills": {
@@ -304,6 +315,16 @@
         "icon": "github",
         "label": "GitHub",
         "href": "https://github.com/kazimVakhobov"
+      },
+      {
+        "icon": "gitlab",
+        "label": "GitLab",
+        "href": "https://gitlab.com/kazimVakhobov"
+      },
+      {
+        "icon": "npm",
+        "label": "npm",
+        "href": "https://npmjs.com/~kazimvakhobov"
       }
     ]
   },
