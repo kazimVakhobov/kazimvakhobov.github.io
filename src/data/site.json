@@ -1,5 +1,5 @@
 {
-  "_readme": "Эталонный словарь. Пустые значения в ru.json / uz.json автоматически подменяются на английские. Элементы массивов с пустым главным полем (role/degree/name) не рендерятся.",
+  "_readme": "All site copy lives here. Array items whose main field (role / degree / name / label) is empty are not rendered, so blank template entries stay invisible.",
   "meta": {
     "title": "Kazim Vakhobov — Senior Frontend Engineer",
     "titleTemplate": "%s — Kazim Vakhobov",
@@ -215,8 +215,7 @@
     "prev": "Previous project",
     "next": "Next project",
     "backToProjects": "All projects",
-    "updated": "Updated",
-    "notTranslated": "This case study is not translated into your language yet — showing the English version."
+    "updated": "Updated"
   },
   "education": {
     "heading": "Education",
@@ -346,7 +345,6 @@
     "theme": "Toggle theme",
     "menu": "Menu",
     "closeMenu": "Close menu",
-    "lang": "Language",
     "skipToContent": "Skip to content",
     "backToTop": "Back to top"
   }

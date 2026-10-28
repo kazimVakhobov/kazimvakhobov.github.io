@@ -3,8 +3,8 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 /**
- * Проекты. Один файл = один проект на одном языке:
- *   src/content/projects/<slug>/<lang>.md   →   id: "<slug>/<lang>"
+ * Проекты. Один файл = один проект:
+ *   src/content/projects/<slug>.md   →   id: "<slug>"   →   /projects/<slug>/
  *
  * Frontmatter — структурированная часть (бейджи, ссылки, стек, метрики),
  * тело Markdown — свободная презентация (разделы, код, картинки).
@@ -32,9 +32,6 @@ const projects = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/projects' }),
   schema: ({ image }) =>
     z.object({
-      /** язык файла — дублируем явно, чтобы фильтровать коллекцию */
-      lang: z.enum(['en', 'ru', 'uz']),
-
       title: z.string(),
       tagline: z.string().default(''),
       /** короткая подпись над заголовком: "Open source · CLI" */

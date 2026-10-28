@@ -1,21 +1,18 @@
 ---
 import { Image } from 'astro:assets';
-import { localizePath, type Dict, type Lang } from '../i18n/ui';
+import site from '../data/site.json';
 import type { Project } from '../lib/projects';
 
 interface Props {
   project: Project;
-  lang: Lang;
-  t: Dict;
 }
 
-const { project, lang, t } = Astro.props;
-const { data } = project.entry;
-const href = localizePath(`/projects/${project.slug}/`, lang);
+const { project } = Astro.props;
+const { data } = project;
 ---
 
 <li class="card" data-tags={data.tags.join('|')}>
-  <a href={href} aria-labelledby={`card-${project.slug}`}>
+  <a href={`/projects/${project.id}/`} aria-labelledby={`card-${project.id}`}>
     {
       data.cover && (
         <div class="card__cover">
@@ -26,12 +23,12 @@ const href = localizePath(`/projects/${project.slug}/`, lang);
 
     <div class="card__body">
       {data.kicker && <p class="card__kicker">{data.kicker}</p>}
-      <h3 class="card__title" id={`card-${project.slug}`}>{data.title}</h3>
+      <h3 class="card__title" id={`card-${project.id}`}>{data.title}</h3>
       {data.tagline && <p class="card__text">{data.tagline}</p>}
 
       <div class="card__foot">
         {data.tags.slice(0, 3).map((tag) => <span class="chip">{tag}</span>)}
-        <span class="link-more">{t.projects.readMore} →</span>
+        <span class="link-more">{site.projects.readMore} →</span>
       </div>
     </div>
   </a>

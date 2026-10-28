@@ -1,27 +1,22 @@
 ---
 import Icon from '../Icon.astro';
-import type { Dict } from '../../i18n/ui';
+import site from '../../data/site.json';
 
-interface Props {
-  t: Dict;
-}
-
-const { t } = Astro.props;
-const email = t.contact.email.trim();
-const links = t.contact.links.filter((l) => l.href.trim() !== '');
+const email = site.contact.email.trim();
+const links = site.contact.links.filter((l) => l.href.trim() !== '');
 ---
 
 <section class="section" id="contact">
-  <h2 class="section__title">{t.contact.heading}</h2>
-  {t.contact.text && <p class="section__lead">{t.contact.text}</p>}
+  <h2 class="section__title">{site.contact.heading}</h2>
+  {site.contact.text && <p class="section__lead">{site.contact.text}</p>}
 
   {
     email && (
       <div class="mailbox">
         <Icon name="mail" />
         <a href={`mailto:${email}`}>{email}</a>
-        <button type="button" data-copy={email} data-copied-label={t.contact.copied}>
-          {t.contact.copy}
+        <button type="button" data-copy={email} data-copied-label={site.contact.copied}>
+          {site.contact.copy}
         </button>
       </div>
     )

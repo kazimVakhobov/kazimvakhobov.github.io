@@ -2,22 +2,20 @@
 import { render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
-import { localizePath, useTranslations, type Lang } from '../i18n/ui';
+import site from '../data/site.json';
 import { getProjects, neighbours, type Project } from '../lib/projects';
 
 interface Props {
-  lang: Lang;
   project: Project;
 }
 
-const { lang, project } = Astro.props;
-const t = useTranslations(lang);
-const { data } = project.entry;
+const { project } = Astro.props;
+const { data } = project;
 
-const { Content } = await render(project.entry);
+const { Content } = await render(project);
 
-const projects = await getProjects(lang);
-const { prev, next } = neighbours(projects, project.slug);
+const projects = await getProjects();
+const { prev, next } = neighbours(projects, project.id);
 
 const statusLabels: Record<string, string> = {
   active: 'Active',
@@ -30,34 +28,24 @@ const linkIcon = (icon: string) =>
   ({ github: 'github', demo: 'play', docs: 'docs', npm: 'npm' })[icon] ?? 'external';
 
 const sortedLinks = [...data.links].sort((a, b) => Number(b.primary) - Number(a.primary));
-const dateFmt = new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'long' });
+const dateFmt = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'long' });
 ---
 
 <BaseLayout
-  lang={lang}
-  path={`/projects/${project.slug}/`}
+  path={`/projects/${project.id}/`}
   title={data.title}
   description={data.tagline}
   ogImage={data.cover?.src}
   ogType="article"
   wide
 >
-  <nav class="crumbs" aria-label={t.projects.heading}>
-    <a href={localizePath('/', lang)}>{t.nav.home}</a>
+  <nav class="crumbs" aria-label={site.projects.heading}>
+    <a href="/">{site.nav.home}</a>
     <span aria-hidden="true">/</span>
-    <a href={localizePath('/projects/', lang)}>{t.projects.heading}</a>
+    <a href="/projects/">{site.projects.heading}</a>
     <span aria-hidden="true">/</span>
     <span>{data.title}</span>
   </nav>
-
-  {
-    project.isFallback && (
-      <p class="notice">
-        <Icon name="languages" />
-        <span>{t.project.notTranslated}</span>
-      </p>
-    )
-  }
 
   <!-- ===== Шапка проекта ===== -->
   <header class="project-head">
@@ -84,7 +72,7 @@ const dateFmt = new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'long' }
       )}
       {data.updated && (
         <li class="badge">
-          {t.project.updated} {dateFmt.format(data.updated)}
+          {site.project.updated} {dateFmt.format(data.updated)}
         </li>
       )}
     </ul>
@@ -112,7 +100,7 @@ const dateFmt = new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'long' }
   {
     data.media.length > 0 && (
       <section class="section" id="demo">
-        <h2 class="section__title">{t.project.demo}</h2>
+        <h2 class="section__title">{site.project.demo}</h2>
         <div class="media">
           {data.media.map((item) => (
             <figure>
@@ -137,7 +125,7 @@ const dateFmt = new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'long' }
   {
     data.stats.length > 0 && (
       <section class="section" id="results">
-        <h2 class="section__title">{t.project.results}</h2>
+        <h2 class="section__title">{site.project.results}</h2>
         <ul class="stats">
           {data.stats.map((stat) => (
             <li>
@@ -154,7 +142,7 @@ const dateFmt = new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'long' }
   {
     data.role && (
       <section class="section" id="role">
-        <h2 class="section__title">{t.project.role}</h2>
+        <h2 class="section__title">{site.project.role}</h2>
         <p class="prose">{data.role}</p>
       </section>
     )
@@ -164,7 +152,7 @@ const dateFmt = new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'long' }
   {
     data.stack.length > 0 && (
       <section class="section" id="stack">
-        <h2 class="section__title">{t.project.stack}</h2>
+        <h2 class="section__title">{site.project.stack}</h2>
         <div class="skills">
           {data.stack.map((group) => (
             <div>
@@ -189,19 +177,19 @@ const dateFmt = new Intl.DateTimeFormat(lang, { year: 'numeric', month: 'long' }
   <!-- ===== Предыдущий / следующий ===== -->
   {
     (prev || next) && (
-      <nav class="pager" aria-label={t.projects.heading}>
+      <nav class="pager" aria-label={site.projects.heading}>
         {prev ? (
-          <a class="pager__link" href={localizePath(`/projects/${prev.slug}/`, lang)}>
-            <span class="pager__dir">← {t.project.prev}</span>
-            <span class="pager__name">{prev.entry.data.title}</span>
+          <a class="pager__link" href={`/projects/${prev.id}/`}>
+            <span class="pager__dir">← {site.project.prev}</span>
+            <span class="pager__name">{prev.data.title}</span>
           </a>
         ) : (
           <span />
         )}
         {next && (
-          <a class="pager__link" href={localizePath(`/projects/${next.slug}/`, lang)}>
-            <span class="pager__dir">{t.project.next} →</span>
-            <span class="pager__name">{next.entry.data.title}</span>
+          <a class="pager__link" href={`/projects/${next.id}/`}>
+            <span class="pager__dir">{site.project.next} →</span>
+            <span class="pager__name">{next.data.title}</span>
           </a>
         )}
       </nav>

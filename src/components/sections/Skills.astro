@@ -1,19 +1,13 @@
 ---
-import type { Dict } from '../../i18n/ui';
+import site from '../../data/site.json';
 
-interface Props {
-  t: Dict;
-}
-
-const { t } = Astro.props;
-
-const groups = t.skills.groups
+const groups = site.skills.groups
   .map((group) => ({ ...group, items: group.items.filter((i) => i.trim() !== '') }))
   .filter((group) => group.items.length > 0);
 ---
 
 <section class="section" id="skills">
-  <h2 class="section__title">{t.skills.heading}</h2>
+  <h2 class="section__title">{site.skills.heading}</h2>
 
   <div class="skills">
     {

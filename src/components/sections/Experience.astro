@@ -1,17 +1,12 @@
 ---
-import type { Dict } from '../../i18n/ui';
+import site from '../../data/site.json';
 
-interface Props {
-  t: Dict;
-}
-
-const { t } = Astro.props;
 // Шаблонный элемент словаря (пустая должность) не рендерим.
-const items = t.experience.items.filter((item) => item.role.trim() !== '');
+const items = site.experience.items.filter((item) => item.role.trim() !== '');
 ---
 
 <section class="section" id="experience">
-  <h2 class="section__title">{t.experience.heading}</h2>
+  <h2 class="section__title">{site.experience.heading}</h2>
 
   <ol class="timeline">
     {

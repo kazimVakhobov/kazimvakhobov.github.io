@@ -2,7 +2,7 @@
 
 Personal portfolio and website of Kazim Vakhobov — Senior Frontend Engineer.
 
-Built with [Astro](https://astro.build). Static output, three languages (en / ru / uz),
+Built with [Astro](https://astro.build). Static output, English only,
 separate case study pages for open source projects.
 
 ## Development
@@ -19,62 +19,56 @@ npm run preview  # serve dist/ locally
 
 Everything editable lives in two places.
 
-### 1. Resume and interface text — `src/i18n/`
+### 1. Resume and interface text — `src/data/site.json`
 
-| File | Purpose |
-| --- | --- |
-| `en.json` | reference dictionary, all keys present |
-| `ru.json` | Russian |
-| `uz.json` | Uzbek (Latin) |
+Every string on the site lives in this one file: metadata, navigation, sidebar,
+hero, about, experience, education, skills, contact, footer. Components import it
+directly (`import site from '../data/site.json'`), so there is no dictionary layer
+to keep in sync.
 
-English is the fallback: an empty string or empty array in `ru.json` / `uz.json` is
-replaced by the English value, so a half-translated page still reads fine.
-
-Array sections (`experience.items`, `skills.groups`, …) contain one empty template
-entry in `en.json` — copy it and fill in. Entries whose main field is still empty are
-not rendered, so blank templates stay invisible on the site.
+Array sections (`experience.items`, `skills.groups`, …) can hold an empty template
+entry — copy one and fill it in. Entries whose main field (`role`, `degree`, `name`,
+`label`) is still empty are not rendered, so blank templates stay invisible on the site.
 
 ### 2. Project case studies — `src/content/projects/`
 
-One folder per project, one Markdown file per language:
+One Markdown file per project:
 
 ```
 src/content/projects/
-└─ my-cli/
-   ├─ en.md
-   ├─ ru.md
-   └─ uz.md
+├─ detent.md
+├─ har-kun-ai.md
+└─ my-cli.md
 ```
 
-The folder name becomes the URL: `/projects/my-cli/`, `/ru/projects/my-cli/`.
+The file name becomes the URL: `my-cli.md` → `/projects/my-cli/`.
 
 - **Frontmatter** — structured data: badges, links, tech stack, metrics, media.
   Schema is in `src/content.config.ts`, so a typo fails the build instead of the page.
 - **Markdown body** — free-form presentation: problem, solution, features,
   architecture, code samples, screenshots.
 
-`src/content/projects/example-project/` is a filled template. Copy it:
+The existing case studies double as templates — `har-kun-ai.md` is the fullest one
+(stats, media, every frontmatter field in use). Copy one and edit it:
 
 ```bash
-cp -r src/content/projects/example-project src/content/projects/my-cli
+cp src/content/projects/har-kun-ai.md src/content/projects/my-cli.md
 ```
 
-Set `draft: false` when the page is ready. Drafts are visible in `npm run dev`
-and excluded from the build. If a language file is missing, that language falls
-back to `en.md` and shows a small notice.
+New pages start as drafts: set `draft: true` while writing, flip it to `draft: false`
+when the page is ready. Drafts are visible in `npm run dev` and excluded from the build.
 
 ## Routing
 
-| URL | Language |
+| URL | Page |
 | --- | --- |
-| `/`, `/projects/`, `/projects/<slug>/` | English (default, no prefix) |
-| `/ru/…` | Russian |
-| `/uz/…` | Uzbek |
+| `/` | home — resume on one page |
+| `/projects/` | case study index with a tag filter |
+| `/projects/<slug>/` | one case study |
 
-Pages under `src/pages/` are thin wrappers; the actual markup is in `src/views/`,
-so all three languages share one implementation.
+Pages under `src/pages/` are thin wrappers; the actual markup is in `src/views/`.
 
-`hreflang` alternates and the sitemap are generated automatically.
+The sitemap is generated automatically.
 
 ## Deploy
 

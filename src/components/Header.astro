@@ -1,26 +1,20 @@
 ---
 import Icon from './Icon.astro';
-import LangSwitcher from './LangSwitcher.astro';
-import { localizePath, type Dict, type Lang } from '../i18n/ui';
+import site from '../data/site.json';
 
 interface Props {
-  lang: Lang;
-  t: Dict;
-  /** Путь без языкового префикса — нужен переключателю языка */
-  path: string;
   /** true на главной: навигация ведёт на якоря этой же страницы */
   isHome?: boolean;
 }
 
-const { lang, t, path, isHome = false } = Astro.props;
+const { isHome = false } = Astro.props;
 
 const sections = ['about', 'experience', 'projects', 'education', 'skills', 'contact'] as const;
-const home = localizePath('/', lang);
 
 const href = (id: (typeof sections)[number]) => {
   // Со внутренних страниц «Проекты» ведут на отдельный раздел, остальное — на якоря главной.
-  if (id === 'projects' && !isHome) return localizePath('/projects/', lang);
-  return isHome ? `#${id}` : `${home}#${id}`;
+  if (id === 'projects' && !isHome) return '/projects/';
+  return isHome ? `#${id}` : `/#${id}`;
 };
 ---
 
@@ -32,26 +26,24 @@ const href = (id: (typeof sections)[number]) => {
       type="button"
       aria-expanded="false"
       aria-controls="sidebar"
-      aria-label={t.ui.menu}
+      aria-label={site.ui.menu}
     >
       <Icon name="menu" />
     </button>
   </div>
 
-  <nav class="nav" id="nav" aria-label={t.nav.home}>
+  <nav class="nav" id="nav" aria-label={site.nav.home}>
     {
       sections.map((id) => (
         <a href={href(id)} data-section={id}>
-          {t.nav[id]}
+          {site.nav[id]}
         </a>
       ))
     }
   </nav>
 
   <div class="header__right">
-    <LangSwitcher lang={lang} path={path} label={t.ui.lang} />
-
-    <button class="icon-btn" id="theme-btn" type="button" aria-label={t.ui.theme}>
+    <button class="icon-btn" id="theme-btn" type="button" aria-label={site.ui.theme}>
       <Icon name="moon" class="icon-moon" />
       <Icon name="sun" class="icon-sun" />
     </button>

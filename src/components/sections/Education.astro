@@ -1,16 +1,11 @@
 ---
-import type { Dict } from '../../i18n/ui';
+import site from '../../data/site.json';
 
-interface Props {
-  t: Dict;
-}
-
-const { t } = Astro.props;
-const items = t.education.items.filter((item) => item.degree.trim() !== '' || item.school.trim() !== '');
+const items = site.education.items.filter((item) => item.degree.trim() !== '' || item.school.trim() !== '');
 ---
 
 <section class="section" id="education">
-  <h2 class="section__title">{t.education.heading}</h2>
+  <h2 class="section__title">{site.education.heading}</h2>
 
   <ol class="timeline">
     {

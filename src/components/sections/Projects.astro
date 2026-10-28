@@ -1,31 +1,29 @@
 ---
 import ProjectCard from '../ProjectCard.astro';
-import { localizePath, type Dict, type Lang } from '../../i18n/ui';
+import site from '../../data/site.json';
 import type { Project } from '../../lib/projects';
 
 interface Props {
-  t: Dict;
-  lang: Lang;
   projects: Project[];
   /** сколько карточек показать на главной */
   limit?: number;
 }
 
-const { t, lang, projects, limit = 4 } = Astro.props;
+const { projects, limit = 4 } = Astro.props;
 
 // На главной показываем featured; если таких нет — просто первые по порядку.
-const featured = projects.filter((p) => p.entry.data.featured);
+const featured = projects.filter((p) => p.data.featured);
 const shown = (featured.length > 0 ? featured : projects).slice(0, limit);
 const hasMore = projects.length > shown.length;
 ---
 
 <section class="section" id="projects">
   <div class="section__head">
-    <h2 class="section__title">{t.projects.heading}</h2>
+    <h2 class="section__title">{site.projects.heading}</h2>
     {
       (hasMore || shown.length > 0) && (
-        <a class="link-more" href={localizePath('/projects/', lang)}>
-          {t.projects.all} →
+        <a class="link-more" href="/projects/">
+          {site.projects.all} →
         </a>
       )
     }
@@ -35,11 +33,11 @@ const hasMore = projects.length > shown.length;
     shown.length > 0 ? (
       <ul class="cards">
         {shown.map((project) => (
-          <ProjectCard project={project} lang={lang} t={t} />
+          <ProjectCard project={project} />
         ))}
       </ul>
     ) : (
-      <p class="prose">{t.projects.empty}</p>
+      <p class="prose">{site.projects.empty}</p>
     )
   }
 </section>

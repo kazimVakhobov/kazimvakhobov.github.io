@@ -2,12 +2,11 @@
 import Sidebar from '../components/Sidebar.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { langs, localizePath, useTranslations, defaultLang, type Lang } from '../i18n/ui';
+import site from '../data/site.json';
 import '../styles/global.css';
 
 interface Props {
-  lang: Lang;
-  /** Путь БЕЗ языкового префикса: "/", "/projects/", "/projects/my-cli/" */
+  /** Путь страницы: "/", "/projects/", "/projects/my-cli/" */
   path: string;
   title: string;
   description?: string;
@@ -21,7 +20,6 @@ interface Props {
 }
 
 const {
-  lang,
   path,
   title,
   description = '',
@@ -32,17 +30,15 @@ const {
   noindex = false,
 } = Astro.props;
 
-const t = useTranslations(lang);
-
-const canonical = new URL(localizePath(path, lang), Astro.site);
+const canonical = new URL(path, Astro.site);
 const ogImageUrl = ogImage ? new URL(ogImage, Astro.site) : undefined;
 
-// Полный заголовок: на главной — как есть, на внутренних — по шаблону из словаря.
-const fullTitle = isHome ? title : t.meta.titleTemplate.replace('%s', title);
+// Полный заголовок: на главной — как есть, на внутренних — по шаблону из site.json.
+const fullTitle = isHome ? title : site.meta.titleTemplate.replace('%s', title);
 ---
 
 <!doctype html>
-<html lang={lang}>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -53,21 +49,13 @@ const fullTitle = isHome ? title : t.meta.titleTemplate.replace('%s', title);
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    {/* Языковые альтернативы — чтобы поиск знал про /ru/ и /uz/ версии этой же страницы */}
-    {
-      langs.map((code) => (
-        <link rel="alternate" hreflang={code} href={new URL(localizePath(path, code), Astro.site)} />
-      ))
-    }
-    <link rel="alternate" hreflang="x-default" href={new URL(localizePath(path, defaultLang), Astro.site)} />
-
     <meta property="og:type" content={ogType} />
     <meta property="og:title" content={fullTitle} />
     {description && <meta property="og:description" content={description} />}
     <meta property="og:url" content={canonical} />
-    <meta property="og:locale" content={lang} />
+    <meta property="og:locale" content="en" />
     {ogImageUrl && <meta property="og:image" content={ogImageUrl} />}
-    {ogImageUrl && t.meta.ogAlt && <meta property="og:image:alt" content={t.meta.ogAlt} />}
+    {ogImageUrl && site.meta.ogAlt && <meta property="og:image:alt" content={site.meta.ogAlt} />}
     <meta name="twitter:card" content={ogImageUrl ? 'summary_large_image' : 'summary'} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -87,17 +75,17 @@ const fullTitle = isHome ? title : t.meta.titleTemplate.replace('%s', title);
   </head>
 
   <body>
-    <a class="skip-link" href="#content">{t.ui.skipToContent}</a>
+    <a class="skip-link" href="#content">{site.ui.skipToContent}</a>
 
-    <Sidebar lang={lang} t={t} />
-    <button class="sidebar-backdrop" id="sidebar-backdrop" type="button" aria-label={t.ui.closeMenu} hidden></button>
+    <Sidebar />
+    <button class="sidebar-backdrop" id="sidebar-backdrop" type="button" aria-label={site.ui.closeMenu} hidden></button>
 
     <div class="shell">
-      <Header lang={lang} t={t} path={path} isHome={isHome} />
+      <Header isHome={isHome} />
 
       <main class:list={['main', { 'main--wide': wide }]} id="content">
         <slot />
-        <Footer t={t} />
+        <Footer />
       </main>
     </div>
 

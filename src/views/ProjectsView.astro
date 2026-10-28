@@ -1,40 +1,33 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import { localizePath, useTranslations, type Lang } from '../i18n/ui';
+import site from '../data/site.json';
 import { getProjects, allTags } from '../lib/projects';
 
-interface Props {
-  lang: Lang;
-}
-
-const { lang } = Astro.props;
-const t = useTranslations(lang);
-const projects = await getProjects(lang);
+const projects = await getProjects();
 const tags = allTags(projects);
 ---
 
 <BaseLayout
-  lang={lang}
   path="/projects/"
-  title={t.projects.metaTitle}
-  description={t.projects.metaDescription}
+  title={site.projects.metaTitle}
+  description={site.projects.metaDescription}
 >
-  <nav class="crumbs" aria-label={t.projects.heading}>
-    <a href={localizePath('/', lang)}>{t.nav.home}</a>
+  <nav class="crumbs" aria-label={site.projects.heading}>
+    <a href="/">{site.nav.home}</a>
     <span aria-hidden="true">/</span>
-    <span>{t.projects.heading}</span>
+    <span>{site.projects.heading}</span>
   </nav>
 
   <section class="section section--first">
-    <h1 class="section__title">{t.projects.heading}</h1>
-    {t.projects.lead && <p class="section__lead">{t.projects.lead}</p>}
+    <h1 class="section__title">{site.projects.heading}</h1>
+    {site.projects.lead && <p class="section__lead">{site.projects.lead}</p>}
 
     {
       tags.length > 1 && (
         <div class="chips" id="project-filter" style="margin-bottom:22px">
           <button class="chip chip--button" type="button" data-tag="*" aria-pressed="true">
-            {t.projects.filterAll}
+            {site.projects.filterAll}
           </button>
           {tags.map((tag) => (
             <button class="chip chip--button" type="button" data-tag={tag} aria-pressed="false">
@@ -49,11 +42,11 @@ const tags = allTags(projects);
       projects.length > 0 ? (
         <ul class="cards" id="project-list">
           {projects.map((project) => (
-            <ProjectCard project={project} lang={lang} t={t} />
+            <ProjectCard project={project} />
           ))}
         </ul>
       ) : (
-        <p class="prose">{t.projects.empty}</p>
+        <p class="prose">{site.projects.empty}</p>
       )
     }
   </section>

@@ -2,32 +2,23 @@
 import { Image } from 'astro:assets';
 import Icon from './Icon.astro';
 import avatar from '../assets/avatar.jpeg';
-import { localizePath, type Lang } from '../i18n/ui';
-import type { Dict } from '../i18n/ui';
-
-interface Props {
-  lang: Lang;
-  t: Dict;
-}
-
-const { lang, t } = Astro.props;
-const home = localizePath('/', lang);
+import site from '../data/site.json';
 
 // Шаблонные элементы с пустым текстом не показываем — заполнятся из словаря позже.
-const facts = t.sidebar.facts.filter((f) => f.label.trim() !== '');
-const socials = t.sidebar.socials.filter((s) => s.href.trim() !== '');
-const hasCv = t.sidebar.cvHref.trim() !== '';
+const facts = site.sidebar.facts.filter((f) => f.label.trim() !== '');
+const socials = site.sidebar.socials.filter((s) => s.href.trim() !== '');
+const hasCv = site.sidebar.cvHref.trim() !== '';
 ---
 
 <aside class="sidebar" id="sidebar">
   <div class="sidebar__top">
-    <a class="avatar" href={home} aria-label={t.nav.home}>
-      <Image src={avatar} alt={t.sidebar.avatarAlt} widths={[96, 192]} sizes="96px" loading="eager" />
+    <a class="avatar" href="/" aria-label={site.nav.home}>
+      <Image src={avatar} alt={site.sidebar.avatarAlt} widths={[96, 192]} sizes="96px" loading="eager" />
     </a>
 
-    <p class="sidebar__name">{t.sidebar.name}</p>
-    <p class="sidebar__role">{t.sidebar.role}</p>
-    {t.sidebar.bio && <p class="sidebar__bio">{t.sidebar.bio}</p>}
+    <p class="sidebar__name">{site.sidebar.name}</p>
+    <p class="sidebar__role">{site.sidebar.role}</p>
+    {site.sidebar.bio && <p class="sidebar__bio">{site.sidebar.bio}</p>}
 
     {
       facts.length > 0 && (
@@ -60,9 +51,9 @@ const hasCv = t.sidebar.cvHref.trim() !== '';
 
     {
       hasCv && (
-        <a class="btn btn--primary" href={t.sidebar.cvHref} download>
+        <a class="btn btn--primary" href={site.sidebar.cvHref} download>
           <Icon name="download" />
-          <span>{t.sidebar.cv}</span>
+          <span>{site.sidebar.cv}</span>
         </a>
       )
     }

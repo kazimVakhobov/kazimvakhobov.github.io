@@ -8,31 +8,24 @@ import Education from '../components/sections/Education.astro';
 import Skills from '../components/sections/Skills.astro';
 import Contact from '../components/sections/Contact.astro';
 import avatar from '../assets/avatar.jpeg';
-import { useTranslations, type Lang } from '../i18n/ui';
+import site from '../data/site.json';
 import { getProjects } from '../lib/projects';
 
-interface Props {
-  lang: Lang;
-}
-
-const { lang } = Astro.props;
-const t = useTranslations(lang);
-const projects = await getProjects(lang);
+const projects = await getProjects();
 ---
 
 <BaseLayout
-  lang={lang}
   path="/"
-  title={t.meta.title}
-  description={t.meta.description}
+  title={site.meta.title}
+  description={site.meta.description}
   ogImage={avatar.src}
   isHome
 >
-  <Hero t={t} />
-  <About t={t} />
-  <Experience t={t} />
-  <Projects t={t} lang={lang} projects={projects} />
-  <Education t={t} />
-  <Skills t={t} />
-  <Contact t={t} />
+  <Hero />
+  <About />
+  <Experience />
+  <Projects projects={projects} />
+  <Education />
+  <Skills />
+  <Contact />
 </BaseLayout>

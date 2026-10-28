@@ -1,20 +1,14 @@
 ---
-import type { Dict } from '../../i18n/ui';
-
-interface Props {
-  t: Dict;
-}
-
-const { t } = Astro.props;
+import site from '../../data/site.json';
 ---
 
 <section class="hero">
-  {t.hero.badge && <p class="hero__badge">{t.hero.badge}</p>}
-  <h1 class="hero__title">{t.hero.title}</h1>
-  {t.hero.text && <p class="hero__text">{t.hero.text}</p>}
+  {site.hero.badge && <p class="hero__badge">{site.hero.badge}</p>}
+  <h1 class="hero__title">{site.hero.title}</h1>
+  {site.hero.text && <p class="hero__text">{site.hero.text}</p>}
 
   <div class="hero__actions">
-    <a class="btn btn--primary" href="#contact">{t.hero.cta}</a>
-    <a class="btn btn--ghost" href="#experience">{t.hero.ctaSecondary}</a>
+    <a class="btn btn--primary" href="#contact">{site.hero.cta}</a>
+    <a class="btn btn--ghost" href="#experience">{site.hero.ctaSecondary}</a>
   </div>
 </section>

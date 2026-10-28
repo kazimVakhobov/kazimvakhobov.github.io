@@ -1,6 +1,5 @@
 ---
-lang: en
-draft: true
+draft: false
 
 title: Har Kun
 tagline: A streaming chat with a language model that can be cut off mid-sentence without losing what already arrived.

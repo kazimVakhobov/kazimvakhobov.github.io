@@ -1,15 +1,10 @@
 ---
-import type { Dict } from '../i18n/ui';
+import site from '../data/site.json';
 
-interface Props {
-  t: Dict;
-}
-
-const { t } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
 <footer class="footer">
-  <span>© {year}{t.footer.rights && <> · {t.footer.rights}</>}</span>
-  {t.footer.note && <span>{t.footer.note}</span>}
+  <span>© {year}{site.footer.rights && <> · {site.footer.rights}</>}</span>
+  {site.footer.note && <span>{site.footer.note}</span>}
 </footer>

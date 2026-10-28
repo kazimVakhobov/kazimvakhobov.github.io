@@ -1,6 +1,5 @@
 ---
-lang: en
-draft: true
+draft: false
 
 title: GREEN-API Telegram client
 tagline: A web chat that sends and receives Telegram messages through GREEN-API, modelled on web.telegram.org.

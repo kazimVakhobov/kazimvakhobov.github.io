@@ -1,6 +1,5 @@
 ---
-lang: en
-draft: true
+draft: false
 
 title: detent
 tagline: Autonomy bounded by a machine-checkable gauge, and measured.
