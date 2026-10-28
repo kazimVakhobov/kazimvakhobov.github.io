@@ -1,0 +1,50 @@
+---
+import Icon from './Icon.astro';
+import site from '../data/site.json';
+
+interface Props {
+  /** true на главной: навигация ведёт на якоря этой же страницы */
+  isHome?: boolean;
+}
+
+const { isHome = false } = Astro.props;
+
+// Порядок = порядок разделов на главной: подсветка активного пункта
+// считает, что массив идёт в том же порядке, что и документ.
+const sections = ['about', 'experience', 'projects', 'methodology', 'education', 'skills', 'contact'] as const;
+
+// Все разделы живут на главной: с неё — якорь, с 404 — якорь на главной.
+const href = (id: (typeof sections)[number]) => (isHome ? `#${id}` : `/#${id}`);
+---
+
+<header class="header" id="top">
+  <div class="header__left">
+    <button
+      class="icon-btn menu-btn"
+      id="menu-btn"
+      type="button"
+      aria-expanded="false"
+      aria-controls="sidebar"
+      aria-label={site.ui.menu}
+    >
+      <Icon name="menu" />
+    </button>
+  </div>
+
+  <nav class="nav" id="nav" aria-label={site.nav.home}>
+    {
+      sections.map((id) => (
+        <a href={href(id)} data-section={id}>
+          {site.nav[id]}
+        </a>
+      ))
+    }
+  </nav>
+
+  <div class="header__right">
+    <button class="icon-btn" id="theme-btn" type="button" aria-label={site.ui.theme}>
+      <Icon name="moon" class="icon-moon" />
+      <Icon name="sun" class="icon-sun" />
+    </button>
+  </div>
+</header>

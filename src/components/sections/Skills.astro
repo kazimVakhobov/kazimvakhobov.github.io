@@ -1,0 +1,26 @@
+---
+import site from '../../data/site.json';
+
+const groups = site.skills.groups
+  .map((group) => ({ ...group, items: group.items.filter((i) => i.trim() !== '') }))
+  .filter((group) => group.items.length > 0);
+---
+
+<section class="section" id="skills">
+  <h2 class="section__title">{site.skills.heading}</h2>
+
+  <div class="skills">
+    {
+      groups.map((group) => (
+        <div>
+          {group.name && <h3 class="skills__group-name">{group.name}</h3>}
+          <ul class="chips">
+            {group.items.map((item) => (
+              <li class="chip">{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+</section>

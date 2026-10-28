@@ -1,0 +1,14 @@
+---
+import site from '../../data/site.json';
+---
+
+<section class="hero">
+  {site.hero.badge && <p class="hero__badge">{site.hero.badge}</p>}
+  <h1 class="hero__title">{site.hero.title}</h1>
+  {site.hero.text && <p class="hero__text">{site.hero.text}</p>}
+
+  <div class="hero__actions">
+    <a class="btn btn--primary" href="#contact">{site.hero.cta}</a>
+    <a class="btn btn--ghost" href="#experience">{site.hero.ctaSecondary}</a>
+  </div>
+</section>

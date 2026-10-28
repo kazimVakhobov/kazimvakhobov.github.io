@@ -1,0 +1,53 @@
+---
+import Icon from '../Icon.astro';
+import site from '../../data/site.json';
+
+const items = site.education.items.filter((item) => item.degree.trim() !== '' || item.school.trim() !== '');
+const certificates = site.education.certificates.filter((c) => c.title.trim() !== '');
+---
+
+<section class="section" id="education">
+  <h2 class="section__title">{site.education.heading}</h2>
+
+  <ol class="timeline">
+    {
+      items.map((item) => (
+        <li class="timeline__item">
+          <h3 class="timeline__role">{item.degree}</h3>
+          <p class="timeline__meta">
+            {item.school && <span class="timeline__company">{item.school}</span>}
+            {item.period && <span>{item.period}</span>}
+            {item.location && <span>{item.location}</span>}
+          </p>
+          {item.note && <p class="prose timeline__body">{item.note}</p>}
+        </li>
+      ))
+    }
+  </ol>
+
+  {
+    certificates.length > 0 && (
+      <div class="certs">
+        <h3 class="skills__group-name">{site.education.certificatesHeading}</h3>
+        <ul class="certs__list">
+          {certificates.map((cert) => (
+            <li>
+              <p class="certs__title">{cert.title}</p>
+              <p class="certs__meta">
+                {cert.issuer && <span>{cert.issuer}</span>}
+                {cert.period && <span>{cert.period}</span>}
+                {cert.id && <span>{cert.id}</span>}
+              </p>
+              {cert.href && (
+                <a class="certs__link" href={cert.href} target="_blank" rel="noopener">
+                  <Icon name="external" />
+                  <span>{site.education.verify}</span>
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+</section>

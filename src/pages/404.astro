@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
+---
+
+<BaseLayout path="/404/" title="Page not found" noindex>
+  <section class="section section--first" style="padding-top:40px">
+    <h1 class="hero__title">404</h1>
+    <p class="section__lead" style="margin-top:14px">
+      This page does not exist. Maybe it moved, or the link is old.
+    </p>
+    <div class="hero__actions">
+      <a class="btn btn--primary" href="/">{site.nav.home}</a>
+      <a class="btn btn--ghost" href="/#projects">{site.projects.heading}</a>
+    </div>
+  </section>
+</BaseLayout>

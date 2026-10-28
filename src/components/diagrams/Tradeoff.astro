@@ -1,0 +1,146 @@
+---
+/**
+ * Схема 6. Размен, строка в строку: что даёт монорепозиторий и что даёт
+ * разделение с общим доком. Не SVG — текста много и он должен переноситься.
+ *
+ * Раскладка переключается по @container, а не по @media: схема живёт внутри
+ * колонки текста (~565px при вьюпорте в 1500), и медиазапрос по окну включил
+ * бы широкий вариант там, где места под него нет.
+ */
+const rows = [
+  { label: 'context', mono: 'every surface, by reading its code', split: 'every surface, by reading its documents' },
+  { label: 'write reach', mono: 'every surface', split: 'the one repository the task names', tone: 'good' },
+  { label: 'a change across two surfaces', mono: 'one commit', split: 'two runs, and a document between them', tone: 'cost' },
+  { label: 'the interface between two surfaces', mono: 'inferred from source', split: 'an artefact somebody signed off on', tone: 'good' },
+  { label: 'what it costs you', mono: 'a bad run can reach anything', split: 'you have to write the documents' },
+];
+---
+
+<div class="trade-wrap">
+  <div class="trade">
+    <p class="trade__h">A monorepo</p>
+    <p class="trade__h trade__h--pick">One repository per surface</p>
+
+    {
+      rows.map((row, i) => (
+        <>
+          <p class:list={['trade__label', { 'is-first': i === 0 }]}>{row.label}</p>
+          <p class="trade__cell">
+            <span class="trade__tag">A monorepo</span>
+            {row.mono}
+          </p>
+          <p class:list={['trade__cell', row.tone && `is-${row.tone}`]}>
+            <span class="trade__tag trade__tag--pick">One repository per surface</span>
+            {row.split}
+          </p>
+        </>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .trade-wrap {
+    container-type: inline-size;
+  }
+
+  /* Узкая раскладка: одна колонка, у каждой ячейки своя подпись-столбец */
+  .trade {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .trade__h {
+    display: none;
+  }
+
+  .trade__label {
+    margin: 18px 0 8px;
+    font-size: 12.5px;
+    line-height: 1.4;
+    color: var(--fg);
+    font-weight: 600;
+  }
+
+  .trade__label.is-first {
+    margin-top: 0;
+  }
+
+  .trade__cell {
+    margin: 0 0 6px;
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--muted);
+  }
+
+  .trade__tag {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  .trade__tag--pick {
+    color: var(--accent);
+  }
+
+  .trade__cell.is-good {
+    color: var(--ok);
+  }
+
+  .trade__cell.is-cost {
+    color: var(--accent);
+  }
+
+  /* Широкая раскладка: две колонки под общими заголовками */
+  @container (min-width: 460px) {
+    .trade {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 26px;
+    }
+
+    .trade__h {
+      display: block;
+      margin: 0 0 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--fg);
+    }
+
+    .trade__h--pick {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .trade__label {
+      grid-column: 1 / -1;
+      margin: 0;
+      padding: 14px 0 6px;
+      font-weight: 400;
+      color: var(--faint);
+    }
+
+    .trade__label.is-first {
+      padding-top: 0;
+    }
+
+    .trade__cell {
+      margin: 0;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .trade__cell:nth-last-of-type(-n + 2) {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .trade__tag {
+      display: none;
+    }
+  }
+</style>

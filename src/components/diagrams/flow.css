@@ -1,0 +1,134 @@
+/* ============================================================
+   Общие стили блок-схем (src/components/diagrams/*).
+   Файл глобальный намеренно: он импортируется из нескольких
+   компонентов, а scoped-стили Astro не достают до соседа.
+
+   Цветов три, все из палитры сайта:
+     серый (--faint)   — обычный ход,
+     зелёный (--ok)    — пропускает дальше,
+     охра (--accent)   — останавливает и зовёт человека.
+   ============================================================ */
+
+.flow {
+  display: block;
+  width: 100%;
+  min-width: 560px;
+  max-width: 700px;
+  height: auto;
+  margin: 0 auto;
+}
+
+/* --- блоки --- */
+
+.flow-box {
+  fill: var(--bg);
+  stroke: var(--line);
+  stroke-width: 1.2;
+}
+.flow-box--accent { stroke: var(--accent); }
+.flow-box--ok { stroke: var(--ok); }
+.flow-box--ghost { fill: var(--chip); stroke: var(--line); stroke-dasharray: 4 4; }
+.flow-box--dashed { fill: none; stroke: var(--line); stroke-dasharray: 5 5; }
+
+.flow-chip { fill: var(--chip); stroke: none; }
+.flow-chip--accent { fill: var(--accent-soft); }
+
+/* --- текст --- */
+
+.flow-title {
+  font-family: var(--mono);
+  font-size: 13px;
+  fill: var(--fg);
+}
+.flow-title--sans {
+  font-family: var(--sans);
+  font-weight: 600;
+}
+.flow-sub {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  fill: var(--faint);
+}
+.flow-mono {
+  font-family: var(--mono);
+  font-size: 11px;
+  fill: var(--faint);
+}
+.flow-label {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  fill: var(--muted);
+}
+.flow-kicker {
+  font-family: var(--sans);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--faint);
+}
+.flow-accent { fill: var(--accent); }
+.flow-ok { fill: var(--ok); }
+.flow-dim { fill: var(--faint); }
+
+/* --- рёбра --- */
+
+.flow-edge {
+  fill: none;
+  stroke: var(--faint);
+  stroke-width: 1.4;
+  marker-end: url(#flow-arrow);
+}
+.flow-edge--ok {
+  stroke: var(--ok);
+  marker-end: url(#flow-arrow-ok);
+}
+.flow-edge--accent {
+  stroke: var(--accent);
+  marker-end: url(#flow-arrow-accent);
+}
+.flow-edge--cut {
+  stroke: var(--accent);
+  stroke-dasharray: 5 4;
+  marker-end: none;
+  opacity: 0.8;
+}
+.flow-edge--thin {
+  stroke: var(--line);
+  stroke-width: 1;
+  marker-end: none;
+}
+
+/* --- легенда под схемой --- */
+
+.flow-legend {
+  /* Рамка схемы прокручивается по горизонтали — легенда остаётся на месте */
+  position: sticky;
+  left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  font-size: 12.5px;
+  color: var(--muted);
+}
+.flow-legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.flow-legend i {
+  width: 18px;
+  height: 2px;
+  flex: none;
+  border-radius: 1px;
+  background: var(--faint);
+}
+.flow-legend .is-ok { background: var(--ok); }
+.flow-legend .is-accent { background: var(--accent); }
+.flow-legend .is-cut {
+  background: none;
+  border-top: 2px dashed var(--accent);
+  height: 0;
+}

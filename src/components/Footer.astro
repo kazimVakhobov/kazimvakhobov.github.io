@@ -1,0 +1,10 @@
+---
+import site from '../data/site.json';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <span>© {year}{site.footer.rights && <> · {site.footer.rights}</>}</span>
+  {site.footer.note && <span>{site.footer.note}</span>}
+</footer>

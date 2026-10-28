@@ -1,0 +1,13 @@
+---
+import site from '../../data/site.json';
+
+const paragraphs = site.about.paragraphs.filter((p) => p.trim() !== '');
+---
+
+<section class="section" id="about">
+  <h2 class="section__title">{site.about.heading}</h2>
+
+  <div class="prose">
+    {paragraphs.map((text) => <p>{text}</p>)}
+  </div>
+</section>

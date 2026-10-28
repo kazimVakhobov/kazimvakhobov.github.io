@@ -1,0 +1,22 @@
+---
+import ProjectCard from '../ProjectCard.astro';
+import site from '../../data/site.json';
+import projects from '../../data/projects';
+---
+
+<section class="section" id="projects">
+  <h2 class="section__title">{site.projects.heading}</h2>
+  {site.projects.lead && <p class="section__lead">{site.projects.lead}</p>}
+
+  {
+    projects.length > 0 ? (
+      <ul class="cards">
+        {projects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </ul>
+    ) : (
+      <p class="prose">{site.projects.empty}</p>
+    )
+  }
+</section>

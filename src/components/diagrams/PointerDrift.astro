@@ -1,0 +1,130 @@
+---
+/**
+ * Схема 4. Почему указатель сабмодуля — это закреплённый коммит, а не ветка:
+ * документы уехали вперёд, а каждый код-репозиторий остался там, где его
+ * последний раз обновили руками.
+ *
+ * SVG с фиксированным viewBox: подписи мелкие, сжимать их ниже ~520px нельзя,
+ * поэтому рамка схемы прокручивается (Figure scroll).
+ */
+const commits = [
+  { x: 150, sha: '3a1f0c2' },
+  { x: 268, sha: '7bd94e1' },
+  { x: 386, sha: 'c04a8f6' },
+  { x: 504, sha: 'e21b57d' },
+  { x: 622, sha: '9f2c1ab' },
+];
+
+const repos = [
+  { name: 'acme-api', y: 112, at: 3 },
+  { name: 'acme-web', y: 148, at: 1 },
+  { name: 'acme-mobile', y: 184, at: 0 },
+  { name: 'acme-admin', y: 220, at: 2 },
+];
+
+const behind = (i: number) => {
+  const n = commits.length - 1 - i;
+  return `${n} ${n === 1 ? 'commit' : 'commits'} behind`;
+};
+---
+
+<svg class="chart" viewBox="0 0 680 258" role="img" aria-label="The shared-docs repository is four commits ahead; each code repository is pinned to an older commit.">
+  <!-- ряд коммитов shared-docs -->
+  <text class="t-tip" x="622" y="22" text-anchor="middle">tip</text>
+  <text class="t-repo t-strong" x="120" y="48" text-anchor="end">shared-docs</text>
+  <line class="rail rail--main" x1="150" y1="44" x2="622" y2="44" />
+
+  {
+    commits.map((c, i) => (
+      <>
+        <circle class:list={['dot', { 'dot--tip': i === commits.length - 1 }]} cx={c.x} cy="44" r="5" />
+        <text class="t-sha" x={c.x} y="66" text-anchor="middle">{c.sha}</text>
+      </>
+    ))
+  }
+
+  <!-- ряды код-репозиториев: пин и расстояние до вершины -->
+  {
+    repos.map((repo) => (
+      <>
+        <line class="drop" x1={commits[repo.at].x} y1="52" x2={commits[repo.at].x} y2={repo.y - 7} />
+        <text class="t-repo" x="120" y={repo.y + 4} text-anchor="end">{repo.name}</text>
+        <line class="rail" x1="150" y1={repo.y} x2="622" y2={repo.y} />
+        <circle class="pin" cx={commits[repo.at].x} cy={repo.y} r="4.5" />
+        <text class="t-behind" x={commits[repo.at].x + 13} y={repo.y + 4}>{behind(repo.at)}</text>
+      </>
+    ))
+  }
+
+  <text class="t-sha" x="622" y="250" text-anchor="end">time →</text>
+</svg>
+
+<style>
+  .chart {
+    width: 100%;
+    min-width: 520px;
+    max-width: 680px;
+    height: auto;
+    margin: 0 auto;
+  }
+
+  .rail {
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+
+  .rail--main {
+    stroke: var(--accent);
+    stroke-width: 1.4;
+  }
+
+  .dot {
+    fill: var(--surface);
+    stroke: var(--accent);
+    stroke-width: 1.6;
+  }
+
+  .dot--tip {
+    fill: var(--accent);
+  }
+
+  .pin {
+    fill: var(--muted);
+  }
+
+  .drop {
+    stroke: var(--faint);
+    stroke-width: 1;
+    stroke-dasharray: 3 3;
+    opacity: 0.5;
+  }
+
+  text {
+    font-family: var(--mono);
+    font-size: 12px;
+    fill: var(--muted);
+  }
+
+  .t-strong {
+    fill: var(--accent);
+  }
+
+  .t-sha {
+    font-size: 10.5px;
+    fill: var(--faint);
+  }
+
+  .t-tip {
+    font-family: var(--sans);
+    font-size: 10.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    fill: var(--accent);
+  }
+
+  .t-behind {
+    font-family: var(--sans);
+    font-size: 11.5px;
+    fill: var(--faint);
+  }
+</style>

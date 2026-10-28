@@ -1,0 +1,72 @@
+---
+/**
+ * Схема 1. Куда агент может писать при двух раскладках репозиториев.
+ * Контекст в обоих случаях полный — различается только досягаемость.
+ */
+import './flow.css';
+
+const surfaces = ['api/', 'web/', 'mobile/', 'admin/'];
+const others = ['acme-api/', 'acme-mobile/', 'acme-admin/'];
+---
+
+<svg class="flow" viewBox="0 0 700 384" role="img" aria-label="In a monorepo the agent may write to every surface; with one repository per surface it may write only to the one it was given.">
+  <!-- ряд 1: монорепозиторий -->
+  <text class="flow-kicker" x="16" y="18">One repository</text>
+
+  <rect class="flow-box" x="16" y="56" width="126" height="58" rx="7" />
+  <text class="flow-title flow-title--sans" x="30" y="80">the agent</text>
+  <text class="flow-sub" x="30" y="98">one task</text>
+
+  <path class="flow-edge flow-edge--accent" d="M142 85 H240" />
+  <text class="flow-label flow-accent" x="191" y="74" text-anchor="middle">writes anywhere</text>
+
+  <rect class="flow-box flow-box--dashed" x="250" y="40" width="434" height="96" rx="7" />
+  <text class="flow-title" x="264" y="62">acme/</text>
+  {
+    surfaces.map((name, i) => (
+      <>
+        <rect class="flow-chip" x={263 + i * 104} y="90" width="96" height="30" rx="5" />
+        <text class="flow-title" x={311 + i * 104} y="110" text-anchor="middle">{name}</text>
+      </>
+    ))
+  }
+
+  <!-- ряд 2: репозиторий на каждую поверхность -->
+  <text class="flow-kicker" x="16" y="218">One repository per surface</text>
+
+  <rect class="flow-box" x="16" y="258" width="126" height="58" rx="7" />
+  <text class="flow-title flow-title--sans" x="30" y="282">the agent</text>
+  <text class="flow-sub" x="30" y="300">the same task</text>
+
+  <path class="flow-edge flow-edge--ok" d="M142 287 H240" />
+  <text class="flow-label flow-ok" x="191" y="276" text-anchor="middle">writes</text>
+
+  <rect class="flow-box flow-box--accent" x="250" y="240" width="180" height="96" rx="7" />
+  <text class="flow-title" x="264" y="264">acme-web/</text>
+  <rect class="flow-chip" x="264" y="276" width="62" height="22" rx="4" />
+  <text class="flow-mono" x="273" y="291">src/</text>
+  <rect class="flow-chip flow-chip--accent" x="264" y="304" width="118" height="22" rx="4" />
+  <text class="flow-mono flow-accent" x="273" y="319">shared-docs/</text>
+  <text class="flow-kicker flow-accent" x="250" y="356">the agent works here</text>
+
+  <!-- и то, до чего из этой рабочей копии не дотянуться -->
+  <path class="flow-edge flow-edge--cut" d="M434 288 H456 M478 288 H500" />
+  <path class="flow-edge flow-edge--cut" style="stroke-dasharray: none" d="M459 280 L475 296 M475 280 L459 296" />
+  <text class="flow-label flow-accent" x="467" y="268" text-anchor="middle">no path</text>
+
+  {
+    others.map((name, i) => (
+      <>
+        <rect class="flow-box flow-box--ghost" x="510" y={240 + i * 36} width="174" height="30" rx="6" />
+        <text class="flow-mono" x="524" y={259 + i * 36}>{name}</text>
+      </>
+    ))
+  }
+  <text class="flow-kicker" x="510" y="356">not in the working copy</text>
+</svg>
+
+<ul class="flow-legend">
+  <li><i class="is-accent"></i>writes to any of them</li>
+  <li><i class="is-ok"></i>writes to one of them</li>
+  <li><i class="is-cut"></i>cannot reach it at all</li>
+</ul>

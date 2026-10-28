@@ -1,0 +1,363 @@
+{
+  "_readme": "All site copy lives here. Array items whose main field (role / degree / name / label) is empty are not rendered, so blank template entries stay invisible.",
+  "meta": {
+    "title": "Kazim Vakhobov — Senior Frontend Engineer",
+    "titleTemplate": "%s — Kazim Vakhobov",
+    "description": "Senior frontend engineer, 8 years of commercial experience, the last 4 as a hands-on team lead. Angular, TypeScript, React, Node.js. B2B platforms and self-service portals for government and enterprise clients.",
+    "ogAlt": "Kazim Vakhobov, senior frontend engineer"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "experience": "Experience",
+    "projects": "Projects",
+    "methodology": "Methodology",
+    "education": "Education",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "sidebar": {
+    "name": "Kazim Vakhobov",
+    "role": "Senior Frontend Engineer — Angular & TypeScript",
+    "bio": "8 years of commercial experience, the last 4 as a hands-on team lead who still writes production code.",
+    "avatarAlt": "Kazim Vakhobov",
+    "facts": [
+      {
+        "icon": "pin",
+        "label": "Kokand, Uzbekistan (UTC+5)",
+        "href": ""
+      },
+      {
+        "icon": "mail",
+        "label": "kazimvakhobov@gmail.com",
+        "href": "mailto:kazimvakhobov@gmail.com"
+      },
+      {
+        "icon": "phone",
+        "label": "+998 94 309 30 49",
+        "href": "tel:+998943093049"
+      },
+      {
+        "icon": "briefcase",
+        "label": "Full-time, remote, available now",
+        "href": ""
+      },
+      {
+        "icon": "languages",
+        "label": "Uzbek · Russian C2 · English B2",
+        "href": ""
+      }
+    ],
+    "socials": [
+      {
+        "icon": "github",
+        "label": "GitHub",
+        "href": "https://github.com/kazimVakhobov"
+      },
+      {
+        "icon": "gitlab",
+        "label": "GitLab",
+        "href": "https://gitlab.com/kazimVakhobov"
+      },
+      {
+        "icon": "linkedin",
+        "label": "LinkedIn",
+        "href": "https://linkedin.com/in/kazimvakhobov"
+      },
+      {
+        "icon": "telegram",
+        "label": "Telegram",
+        "href": "https://t.me/kazimvakhobov"
+      },
+      {
+        "icon": "npm",
+        "label": "npm",
+        "href": "https://npmjs.com/~kazimvakhobov"
+      }
+    ],
+    "cv": "Download CV",
+    "cvHref": "/cv/kazim-vakhobov-cv.pdf"
+  },
+  "hero": {
+    "badge": "Open to work",
+    "title": "Frontend engineer who leads a team and still ships code",
+    "text": "Angular and TypeScript as the core stack for eight years, React and Node.js alongside it. B2B platforms, partner portals and admin panels for government and enterprise clients in Malaysia and across the CIS region.",
+    "cta": "Get in touch",
+    "ctaSecondary": "See experience"
+  },
+  "about": {
+    "heading": "About",
+    "paragraphs": [
+      "Senior frontend engineer with 8 years and 3 months of commercial experience, the last 4 years as a hands-on team lead who still writes production code every day. Core stack is Angular with TypeScript and RxJS, used continuously in every role since 2018; ReactJS and React Native as a second stack, Node.js with NestJS on the backend side.",
+      "Track record in B2B platforms and self-service portals: partner dashboards, administrative panels, data marketplaces and integrations with external systems, delivered for government and enterprise clients in Malaysia and for SaaS products across the CIS region. Four years based in Malaysia with a Malaysian company, including client-facing solution consulting in English.",
+      "Since 2025 I have run an AI-first engineering process end to end — shipping production systems built with agentic development tooling while keeping code review, manual testing and architectural standards mandatory. The guardrails are the point: a specification with explicit acceptance criteria before the work starts, and automated verification before it is called done."
+    ]
+  },
+  "experience": {
+    "heading": "Experience",
+    "present": "Present",
+    "items": [
+      {
+        "role": "Solution Consultant → Solution Architect & Frontend Team Lead",
+        "company": "Datamicron SDN BHD",
+        "companyHref": "",
+        "period": "Jul 2022 — Aug 2026",
+        "location": "Malaysia, relocated",
+        "summary": "Owned the frontend track across system-integration and BigData programmes for Malaysian government and enterprise clients. Grew from consultant to solution architect and development team lead, working directly with clients in English on requirements and technical documentation.",
+        "bullets": [
+          "SSM Data Marketplace (Ministry of Domestic Trade) — an online marketplace for statistical data giving individuals and companies access to BigData through complex filtering at the Data Lake and Data Warehouse level. Designed and implemented the frontend architecture in ReactJS and TypeScript, and was the only backend developer on the project: a Java Spring Boot service and a Postgres schema from an empty repository.",
+          "Non-standard build on that project: bundles embedded into Apache Wicket through a custom bridge and served from a single Tomcat instance alongside Spring Boot, with no separate Node.js runtime in production.",
+          "Report Service — a standalone NestJS microservice abstracting Data Lake and Data Warehouse access: SQL assembled on the fly from client-side filters, source configurations stored as JSON, Redis caching. Designed, built and tested end to end.",
+          "JPJ AwAS (Road Transport Department) — automated penalty reporting from road cameras, integrated with a traffic-violation recognition system. Frontend in Angular and TypeScript on top of Java Spring Boot.",
+          "Contributed to system architecture design, technical documentation, requirement alignment with clients and task distribution across the development team."
+        ],
+        "stack": [
+          "ReactJS",
+          "TypeScript",
+          "Angular",
+          "NestJS",
+          "Java Spring Boot",
+          "PostgreSQL",
+          "Redis",
+          "Apache Tomcat"
+        ]
+      },
+      {
+        "role": "Development Team Lead",
+        "company": "Yuk Markaz 24",
+        "companyHref": "",
+        "period": "Jan 2026 — Apr 2026",
+        "location": "Uzbekistan, project engagement alongside primary role",
+        "summary": "Delivered an end-to-end freight logistics platform for the CIS market: a landing page, an administrative panel, a web workspace for logistics operators and dispatchers, and a driver mobile application — four applications to production in four months.",
+        "bullets": [
+          "Admin panel in Angular 17, dispatcher workspace in ReactJS with TypeScript, driver application in React Native for iOS and Android, landing page in Astro, backend in NestJS with PostgreSQL.",
+          "Built AI-first from day one: implementation through agentic development tooling, screen and user-flow prototyping before code.",
+          "Introduced a parallel multi-agent development workflow using Git Submodules as a shared documentation layer — one consistent context space for every agent and every engineer on the team, which stopped parallel work from drifting apart on architectural decisions.",
+          "Responsible for client-side architecture, business logic design and task distribution across the team.",
+          "Outcome: platform live in production, mobile applications submitted for App Store and Google Play review."
+        ],
+        "stack": [
+          "Angular 17",
+          "ReactJS",
+          "React Native",
+          "Astro",
+          "NestJS",
+          "PostgreSQL"
+        ]
+      },
+      {
+        "role": "Team Lead & Frontend Developer",
+        "company": "Smartbooking uz",
+        "companyHref": "",
+        "period": "Jun 2022 — Dec 2025",
+        "location": "Uzbekistan, part-time alongside primary role",
+        "summary": "Single-window management system for hotels and hotel chains, covering bookings, reporting and dynamic pricing.",
+        "bullets": [
+          "Core product capability was two-way integration with distribution channels: Booking.com, Agoda, Airbnb, Mybooking.uz and others.",
+          "Hands-on development in Angular 9 and above with TypeScript, client-side architecture decisions, code review and onboarding of new developers. Backend team worked in PHP."
+        ],
+        "stack": [
+          "Angular 9+",
+          "TypeScript",
+          "RxJS",
+          "SCSS"
+        ]
+      },
+      {
+        "role": "Developer → Team Lead",
+        "company": "MatrixSolutions",
+        "companyHref": "",
+        "period": "Jun 2018 — Jun 2022",
+        "location": "Tashkent, Uzbekistan",
+        "summary": "Web and mobile interface development in Angular 2 and above with TypeScript. Progressed from developer to team lead across several commercial projects.",
+        "bullets": [
+          "E-Cinema — a three-product suite (E-Ticket, E-Kino, Kinoprokat) for cinema distribution management, electronic ticket sales and reporting automation. Role: project manager and frontend developer in Angular.",
+          "Falcon Messenger — a corporate messenger. Role: Android team lead and hands-on development in Kotlin, with AES and RSA encryption and Socket.IO."
+        ],
+        "stack": [
+          "Angular 2+",
+          "TypeScript",
+          "Kotlin",
+          "Socket.IO"
+        ]
+      }
+    ]
+  },
+  "projects": {
+    "heading": "Projects",
+    "lead": "Products and tools I have built — the source where it is open, the live site where it is not.",
+    "empty": "Nothing here yet."
+  },
+  "writeup": {
+    "heading": "Methodology",
+    "lead": "The way I run agentic development: one documentation repository, mounted into every code repository as a git submodule, read-only everywhere.",
+    "slug": "/agents-need-context-not-access/",
+    "kicker": "Methodology",
+    "title": "Agents need context, not access",
+    "description": "Agentic development is pushing teams into monorepos so an agent can see the neighbouring service. There is another way: one documentation repository, mounted into every code repository as a git submodule and read-only everywhere. The mechanism, what it costs, and the part that stopped being doable by hand.",
+    "ogAlt": "Agents need context, not access — shared-docs mounted as a submodule in every repository of a product",
+    "published": "2026-10-28",
+    "date": "28 October 2026",
+    "readingTime": "5 min read",
+    "teaser": "Agents read what is on disk, which is why agentic development keeps pushing teams into monorepos. It buys context by deleting the access boundary — an agent whose screen fails on a bad endpoint can go and change the endpoint. I keep one repository per surface and give every one of them the same documentation repository as a submodule: the whole product is readable, one repository is writable.",
+    "points": [
+      "One repository per surface, plus shared-docs mounted at the same path in each — specifications, ADRs, task queue, progress and changelogs",
+      "The boundary is mechanical, not an instruction: the neighbouring service is simply not in the working copy",
+      "A submodule pins a commit, so detent refreshes it, records which revision the agent read, and refuses to commit a pointer nobody can reach"
+    ],
+    "cta": "Read the write-up",
+    "backHome": "Back to the home page"
+  },
+  "education": {
+    "heading": "Education",
+    "items": [
+      {
+        "degree": "Bachelor's degree, Software Engineering",
+        "school": "Tashkent University of Information Technologies (TUIT)",
+        "period": "2018",
+        "location": "Tashkent, Uzbekistan",
+        "note": ""
+      }
+    ],
+    "certificatesHeading": "Certificates",
+    "verify": "Verify",
+    "certificates": [
+      {
+        "title": "Developer qualification certificate",
+        "issuer": "GREEN-API",
+        "period": "October 2026",
+        "id": "No. 2244565",
+        "href": "https://green-api.com/certificates/developer/25dacfdcaffd4fa3.pdf"
+      }
+    ]
+  },
+  "skills": {
+    "heading": "Skills",
+    "groups": [
+      {
+        "name": "Frontend — core",
+        "items": [
+          "Angular 2–17",
+          "TypeScript",
+          "RxJS",
+          "Angular Material",
+          "AntDesign"
+        ]
+      },
+      {
+        "name": "Frontend",
+        "items": [
+          "ReactJS",
+          "Redux",
+          "JavaScript ES6+",
+          "HTML5",
+          "CSS3",
+          "SCSS",
+          "Bootstrap",
+          "Astro"
+        ]
+      },
+      {
+        "name": "Mobile",
+        "items": [
+          "React Native (iOS / Android)",
+          "Android (Kotlin, Java)"
+        ]
+      },
+      {
+        "name": "Backend",
+        "items": [
+          "NestJS",
+          "Node.js",
+          "Java Spring Boot"
+        ]
+      },
+      {
+        "name": "AI-assisted engineering",
+        "items": [
+          "Agentic development tooling",
+          "Multi-agent workflows",
+          "RAG",
+          "Context management",
+          "Spec-driven delivery"
+        ]
+      },
+      {
+        "name": "Architecture",
+        "items": [
+          "SOLID",
+          "OOP",
+          "Microservices",
+          "REST API design",
+          "WebSocket",
+          "Socket.IO",
+          "Modular SPA"
+        ]
+      },
+      {
+        "name": "Data & caching",
+        "items": [
+          "PostgreSQL",
+          "MongoDB",
+          "Redis"
+        ]
+      },
+      {
+        "name": "Tooling",
+        "items": [
+          "Git",
+          "Git Submodules",
+          "Docker",
+          "Nginx",
+          "PM2",
+          "Unix / Linux"
+        ]
+      }
+    ]
+  },
+  "contact": {
+    "heading": "Let's talk",
+    "text": "Open to full-time remote work, available immediately. Based in Kokand, UTC+5 — three to four hours ahead of Central Europe, with substantial daily overlap with European working hours.",
+    "email": "kazimvakhobov@gmail.com",
+    "copy": "Copy",
+    "copied": "Copied",
+    "links": [
+      {
+        "icon": "telegram",
+        "label": "Telegram",
+        "href": "https://t.me/kazimvakhobov"
+      },
+      {
+        "icon": "linkedin",
+        "label": "LinkedIn",
+        "href": "https://linkedin.com/in/kazimvakhobov"
+      },
+      {
+        "icon": "github",
+        "label": "GitHub",
+        "href": "https://github.com/kazimVakhobov"
+      },
+      {
+        "icon": "gitlab",
+        "label": "GitLab",
+        "href": "https://gitlab.com/kazimVakhobov"
+      },
+      {
+        "icon": "npm",
+        "label": "npm",
+        "href": "https://npmjs.com/~kazimvakhobov"
+      }
+    ]
+  },
+  "footer": {
+    "rights": "Kazim Vakhobov",
+    "note": "Built with Astro"
+  },
+  "ui": {
+    "theme": "Toggle theme",
+    "menu": "Menu",
+    "closeMenu": "Close menu",
+    "skipToContent": "Skip to content",
+    "backToTop": "Back to top"
+  }
+}
