@@ -1,7 +1,7 @@
 [
   {
     "id": "detent",
-    "kicker": "Open source · developer tooling",
+    "kicker": "Developer tooling",
     "title": "detent",
     "description": "Runs coding agents against a queue of tasks and lets nothing finish until the repository's own checks pass. A second model reads every green diff and may demote, never approve. Each run is a journal line: which model, how many rounds, how long, how much.",
     "tags": ["Node.js", "CLI", "Coding agents"],
@@ -12,8 +12,8 @@
   },
   {
     "id": "har-kun-ai",
-    "kicker": "Open source · React + TypeScript",
-    "title": "Har Kun",
+    "kicker": "React + TypeScript",
+    "title": "Har Kun AI",
     "description": "A streaming chat with a language model that can be stopped mid-sentence without losing what already arrived. The API key never reaches the browser, and the whole interface runs with no key at all against a built-in mock.",
     "tags": ["React", "TypeScript", "LLM"],
     "links": [
